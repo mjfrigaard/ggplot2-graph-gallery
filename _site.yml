@@ -1,0 +1,13 @@
+name: "ggplot2-graph-gallery"
+output_dir: "docs"
+navbar:
+  title: "ggplot2 Graph Gallery"
+  left:
+    - text: "Overviewe"
+      href: index.html
+    - text: "Amounts"
+      href: ggp2-gallery-01-amounts.html
+    - text: "Distributions"
+      href: ggp2-gallery-02-distributions.html
+    - text: "Proportions"
+      href: ggp2-gallery-03-proportions.html

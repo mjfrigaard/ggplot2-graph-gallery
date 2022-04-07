@@ -1,0 +1,423 @@
+---
+title: "ODSC: ggplot2 Graph Gallery"
+subtitle: "Statistical measures: Uncertainty"
+author: "Martin Frigaard"
+institute: "California State University | BioMarin"
+output:
+  xaringan::moon_reader:
+    css:
+      - default
+      - css/lexis.css
+      - css/lexis-fonts.css
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r meta, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_general(
+    description = "ODSC: ggplot2 Graph Gallery",
+    generator = "xaringan and remark.js"
+  ) %>%
+  meta_name("github-repo" = "mjfrigaard/odsc-ggplot2-2022/tree/gh-pages") %>%
+  meta_social(
+    title = "ODSC: Exploratory Data Visualization with ggplot2",
+    url = "https://mjfrigaard.github.io/odsc-ggplot2-2022/",
+    og_type = "website",
+    og_author = "Martin Frigaard",
+    twitter_card_type = "summary",
+    twitter_creator = "@mjfrigaard"
+  )
+```
+
+```{r setup, include=FALSE}
+dateWritten <- format(as.Date('2021-09-21'), format = "%B %d %Y")
+today <- format(Sys.Date(), format = "%B %d %Y")
+library(knitr)
+library(tidyverse)
+library(fontawesome)
+library(ggwaffle)
+library(ggpubr)
+library(ggrepel)
+library(ggridges)
+library(ggtern)
+library(ggsunburst)
+library(ggbeeswarm)
+library(ggmosaic)
+library(ggcorrplot)
+library(openintro)
+library(ggwaffle)
+library(statebins)
+library(treemapify)
+options(
+    htmltools.dir.version = FALSE,
+    knitr.table.format = "html",
+    knitr.kable.NA = ''
+)
+# fs::dir_create("slides-cache/")
+knitr::opts_chunk$set(
+    cache = TRUE,
+    warning = FALSE,
+    message = FALSE,
+    fig.path = "images/",
+    fig.width = 7.252,
+    fig.height = 4,
+    comment = " ",
+    fig.retina = 3 # Better figure resolution
+)
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+xaringanExtra::use_share_again()
+xaringanExtra::style_share_again(share_buttons = "all")
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,
+  mute_unhighlighted_code = FALSE
+)
+# xaringan::inf_mr() ----
+```
+
+```{r funs, include=FALSE, warning=FALSE, message=FALSE}
+# fs::dir_tree("../code")
+source("../src/copy-slide-images.R")
+source("../src/create-movie-data.R")
+source("../src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+```
+
+
+layout: true
+
+<!-- this adds the link footer to all slides, depends on footer-small class in css-->
+
+<div class="footer-small"><span>https://mjfrigaard.github.io/odsc-ggplot2-2022/</div>
+
+---
+name: title-slide
+class: title-slide, center, middle, inverse
+
+# `r rmarkdown::metadata$title`
+#.fancy[`r rmarkdown::metadata$subtitle`]
+
+<br>
+
+.large[by Martin Frigaard]
+
+Written: `r dateWritten`
+
+Updated: `r today`
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# Resources :
+
+.leftcol[
+
+### The graphs
+
+#### - [The `ggplot2` book](https://ggplot2-book.org/index.html) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen 
+
+#### - [Data Visualization: A Practical Introduction](https://socviz.co/) by Kieran Healy (2018)
+
+#### - [R Graphics Cookbook, 2nd edition](https://r-graphics.org/) by Winston Chang (2022)
+
+
+]
+
+.rightcol[
+
+### Graph Categories 
+
+#### - [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke (2019)
+
+#### - [Data Visualisation: A Handbook for Data Driven Design](https://www.visualisingdata.com/book/) by Andy Kirk (2019)
+
+#### - [Data Points](https://flowingdata.com/books/) by Nathan Yau (2013)
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Graph Categories: *The ‘CHRTS’ Families of Chart Types*
+
+.footer[.left[.small[
+
+From *"Data Visualisation: A Handbook for Data Driven Design"*, Andy Kirk (2019)
+
+]]]
+
+--
+
+.leftcol[
+
+> #### .blue[Comparing categories and distributions]
+
+> #### .blue[Hierarchies/proportions]
+
+> #### .blue[Correlations and connections]
+
+]
+
+--
+ 
+.rightcol[
+
+> #### .blue[Trends and intervals over time]
+
+> #### .blue[Maps, overlays, and/or distortions]
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Graph Categories: Directory of Visualizations
+
+.footer[.left[.small[
+
+From *"Fundamentals of Data Visualization"*, Claus O. Wilke (2019)
+
+]]]
+
+--
+
+.leftcol[
+
+> #### .red[Amounts]
+
+> #### .red[Distributions]
+
+> #### .red[Proportions]
+
+]
+
+--
+
+.rightcol[
+
+> #### .red[X–Y relationships]
+
+> #### .red[Geospatial Data]
+
+> #### .red[Uncertainty]
+
+]
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Comprehensive Graph Gallery
+
+--
+
+.leftcol[
+
+> .blue[Comparing categories and values]
+
+> - .red[Amounts]
+
+> - .red[Distributions]
+
+> .blue[Hierarchies and proportions]
+
+> - .red[Part-to-whole relationships]
+
+]
+
+--
+ 
+.rightcol[
+
+> .blue[Trends, correlations and connections]
+
+> - .red[X–Y relationships]
+
+> .blue[Maps, overlays, and distortions]
+
+> - .red[Geospatial Data]
+
+> .blue[Statistical measures]
+
+> - .red[.fancy[Uncertainty]]
+
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# Data
+
+.leftcol[
+
+Data come from the following packages:
+
+#### - `palmerpenguins`
+
+#### - `fivethirtyeight` 
+
+#### - `ggplot2movies`
+
+]
+
+--
+
+.rightcol[
+
+Or created using `tribble()`
+
+```{r tribble-code, eval=FALSE}
+tribble(
+  ~`variable 1`, ~`variable 2`,
+            "a",            1,
+            "b",            2,
+            "c",            3)
+```
+
+.small[
+
+
+```{r tribble-print, echo=FALSE}
+rmarkdown::paged_table(
+tribble(
+  ~`variable 1`, ~`variable 2`,
+            "a",            1,
+            "b",            2,
+            "c",            3)
+    )
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `palmerpenguins` 
+
+[`palmerpenguins` package website](https://allisonhorst.github.io/palmerpenguins/)
+
+.small[
+
+```{r penguins}
+palmerpenguins::penguins -> penguins
+```
+
+```{r paged_table-penguins, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `fivethirtyeight` 
+
+[`fivethirtyeight` package website](https://fivethirtyeight-r.netlify.app/)
+
+
+.small[
+
+*All datasets are listed below with descriptions*
+
+```{r fivethirtyeight, eval=FALSE}
+datasets("fivethirtyeight")
+```
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+rmarkdown::paged_table(datasets("fivethirtyeight"))
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `ggplot2movies` 
+
+[`ggplot2movies` package website](https://github.com/hadley/ggplot2movies)
+
+.small[
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+
+```{r paged_table-movies_data, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 25%
+
+# Statistical measures: 
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# .fancy[Uncertainty]

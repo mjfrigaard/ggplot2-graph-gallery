@@ -1,0 +1,213 @@
+---
+title: "ODSC: ggplot2 Graph Gallery (working)"
+output:
+  xaringan::moon_reader:
+    css:
+      - default
+      - css/lexis.css
+      - css/lexis-fonts.css
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+dateWritten <- format(as.Date('2021-09-21'), format = "%B %d %Y")
+today <- format(Sys.Date(), format = "%B %d %Y")
+library(knitr)
+library(tidyverse)
+library(fontawesome)
+library(ggwaffle)
+library(ggpubr)
+library(ggrepel)
+library(ggridges)
+library(ggtern)
+library(ggsunburst)
+library(ggbeeswarm)
+library(ggcorrplot)
+library(openintro)
+library(ggwaffle)
+library(statebins)
+library(ggmosaic)
+library(treemapify)
+library(fivethirtyeight)
+library(fivethirtyeightdata)
+options(
+    htmltools.dir.version = FALSE,
+    knitr.table.format = "html",
+    knitr.kable.NA = ''
+)
+# fs::dir_create("slides-cache/")
+knitr::opts_chunk$set(
+    warning = FALSE,
+    message = FALSE,
+    fig.path = "images/",
+    fig.width = 7.252,
+    fig.height = 4,
+    comment = " ",
+    fig.retina = 3 # Better figure resolution
+)
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+xaringanExtra::use_share_again()
+xaringanExtra::style_share_again(share_buttons = "all")
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,
+  mute_unhighlighted_code = FALSE
+)
+# xaringan::inf_mr() ----
+```
+
+```{r create_movie_data, include=FALSE, warning=FALSE, message=FALSE}
+# create a smaller version of movie data
+library(ggplot2movies)
+library(tidyverse)
+library(knitr)
+library(fontawesome)
+library(ggwaffle)
+library(ggpubr)
+library(ggrepel)
+library(ggridges)
+library(ggtern)
+library(ggsunburst)
+library(ggbeeswarm)
+library(ggmosaic)
+library(ggcorrplot)
+library(openintro)
+library(ggwaffle)
+library(statebins)
+create_movie_data <- function() {
+  movies <- ggplot2movies::movies
+    MovieData <- movies %>%
+        dplyr::filter(year > 2000 & mpaa != "") %>%
+        tidyr::pivot_longer(cols = c(Action:Short),
+                     names_to = "genre_key",
+                     values_to = "genre_value") %>%
+        dplyr::select(title:rating, mpaa, genre_key, genre_value) %>%
+        dplyr::filter(genre_value == 1) %>%
+        dplyr::mutate(
+            genre_value = case_when(
+                genre_key == 'Action' ~ "action",
+                genre_key == 'Animation' ~ "animation",
+                genre_key == 'Comedy' ~ "comedy",
+                genre_key == 'Drama' ~ "drama",
+                genre_key == 'Documentary' ~ "documentary",
+                genre_key == 'Romance' ~ "romance",
+                genre_key == 'Short' ~ "short",
+                TRUE ~ NA_character_)) %>%
+        tidyr::pivot_wider(names_from = genre_key,
+                    values_from = genre_value) %>%
+        tidyr::unite(col = "genres",
+                     Action:Short,
+                     sep = ", ") %>%
+        dplyr::mutate(
+            genres = str_remove_all(string = genres, pattern = "NA, "),
+            genres = str_remove_all(string = genres, pattern = ", NA"))
+    return(MovieData)
+}
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+```
+
+name: title-slide
+class: title-slide, center, middle, inverse
+
+# ODSC: `ggplot2` Graph Gallery (working)
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Category:] .fancy[Graph (type)]
+
+<br>
+
+.large[
+
+> *Description*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Category:] .fancy[Graph Data]
+
+<br>
+
+.leftcol40[
+
+.code30[
+
+```{r plot_data_code, eval=FALSE}
+penguins <- palmerpenguins::penguins
+penguins_bar <- filter(penguins, !is.na(sex))
+```
+
+]
+
+]
+
+.rightcol60[
+
+.small[
+
+```{r plot_data_paged, echo=FALSE}
+penguins <- palmerpenguins::penguins
+penguins_bar <- filter(penguins, !is.na(sex))
+rmarkdown::paged_table(penguins_bar)
+```
+
+]]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Category:] .fancy[Graph (display)]
+
+.leftcol35[.code50[
+
+```{r plot_name, fig.show='hide'}
+penguins_bar %>%
+  ggplot(
+      aes(x = flipper_length_mm,
+      # reorder this by x
+      y =  reorder(x = species, 
+               flipper_length_mm),
+      label = island)) +
+  geom_bar(
+      aes(fill = island),
+          stat = "identity",
+         width = .5) + 
+    labs(y = " ")
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-plot_name, ref.label='plot_name', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+

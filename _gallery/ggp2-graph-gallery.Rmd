@@ -1,0 +1,1894 @@
+---
+title: "ODSC: ggplot2 Graph Gallery"
+subtitle: "A collection of graphs (with code)"
+author: "Martin Frigaard"
+institute: "California State University | BioMarin"
+output:
+  xaringan::moon_reader:
+    css:
+      - default
+      - css/lexis.css
+      - css/lexis-fonts.css
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+
+```{r meta, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_general(
+    description = "ODSC: ggplot2 Graph Gallery",
+    generator = "xaringan and remark.js"
+  ) %>%
+  meta_name("github-repo" = "mjfrigaard/odsc-ggplot2-2022/tree/gh-pages") %>%
+  meta_social(
+    title = "ODSC: Exploratory Data Visualization with ggplot2",
+    url = "https://mjfrigaard.github.io/odsc-ggplot2-2022/",
+    og_type = "website",
+    og_author = "Martin Frigaard",
+    twitter_card_type = "summary",
+    twitter_creator = "@mjfrigaard"
+  )
+```
+
+```{r setup, include=FALSE}
+dateWritten <- format(as.Date('2021-09-21'), format = "%B %d %Y")
+today <- format(Sys.Date(), format = "%B %d %Y")
+library(knitr)
+library(tidyverse)
+library(fontawesome)
+library(ggwaffle)
+library(ggpubr)
+library(ggrepel)
+library(ggridges)
+library(ggtern)
+library(ggsunburst)
+library(ggbeeswarm)
+library(ggcorrplot)
+library(openintro)
+library(ggwaffle)
+library(statebins)
+library(ggmosaic)
+library(treemapify)
+library(fivethirtyeight)
+library(fivethirtyeightdata)
+options(
+    htmltools.dir.version = FALSE,
+    knitr.table.format = "html",
+    knitr.kable.NA = ''
+)
+# fs::dir_create("slides-cache/")
+knitr::opts_chunk$set(
+    warning = FALSE,
+    message = FALSE,
+    fig.path = "images/",
+    fig.width = 7.252,
+    fig.height = 4,
+    comment = " ",
+    fig.retina = 3 # Better figure resolution
+)
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+xaringanExtra::use_share_again()
+xaringanExtra::style_share_again(share_buttons = "all")
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,
+  mute_unhighlighted_code = FALSE
+)
+# xaringan::inf_mr() ----
+```
+
+```{r funs, include=FALSE, warning=FALSE, message=FALSE}
+# fs::dir_tree("../code")
+source("../src/copy-slide-images.R")
+source("../src/create-movie-data.R")
+source("../src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+```
+
+
+layout: true
+
+<!-- this adds the link footer to all slides, depends on footer-small class in css-->
+
+<div class="footer-small"><span>https://mjfrigaard.github.io/odsc-ggplot2-2022/</div>
+
+---
+name: title-slide
+class: title-slide, center, middle, inverse
+
+# `r rmarkdown::metadata$title`
+#.fancy[`r rmarkdown::metadata$subtitle`]
+
+<br>
+
+.large[by Martin Frigaard]
+
+Written: `r dateWritten`
+
+Updated: `r today`
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# Resources :
+
+.leftcol[
+
+### The graphs
+
+#### - [The `ggplot2` book](https://ggplot2-book.org/index.html) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen 
+
+#### - [Data Visualization: A Practical Introduction](https://socviz.co/) by Kieran Healy (2018)
+
+#### - [R Graphics Cookbook, 2nd edition](https://r-graphics.org/) by Winston Chang (2022)
+
+
+]
+
+.rightcol[
+
+### Graph Categories 
+
+#### - [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke (2019)
+
+#### - [Data Visualisation: A Handbook for Data Driven Design](https://www.visualisingdata.com/book/) by Andy Kirk (2019)
+
+#### - [Data Points](https://flowingdata.com/books/) by Nathan Yau (2013)
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Graph Categories: *The ‘CHRTS’ Families of Chart Types*
+
+.footer[.left[.small[
+
+From *"Data Visualisation: A Handbook for Data Driven Design"*, Andy Kirk (2019)
+
+]]]
+
+--
+
+.leftcol[
+
+> #### .blue[Comparing categories and distributions]
+
+> #### .blue[Hierarchies/part-to-whole relationships]
+
+> #### .blue[Correlations and connections]
+
+]
+
+--
+ 
+.rightcol[
+
+> #### .blue[Trends and intervals over time]
+
+> #### .blue[Maps, overlays, and/or distortions]
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Graph Categories: Directory of Visualizations
+
+.footer[.left[.small[
+
+From *"Fundamentals of Data Visualization"*, Claus O. Wilke (2019)
+
+]]]
+
+--
+
+.leftcol[
+
+> #### .red[Amounts]
+
+> #### .red[Distributions]
+
+> #### .red[Proportions]
+
+]
+
+--
+
+.rightcol[
+
+> #### .red[X–Y relationships]
+
+> #### .red[Geospatial Data]
+
+> #### .red[Uncertainty]
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Comprehensive Graph Gallery
+
+--
+
+.leftcol[
+
+> .blue[Comparing categories and distributions]
+
+> - .red[Amounts]
+
+> - .red[Distributions]
+
+> .blue[Hierarchies/part-to-whole relationships]
+
+> - .red[Proportions]
+
+]
+
+--
+ 
+.rightcol[
+
+> .blue[Correlations and connections]
+
+> - .red[X–Y relationships]
+
+> .blue[Trends and intervals over time]
+
+> - .red[X–Y relationships]
+
+> .blue[Maps, overlays, and distortions]
+
+> - .red[Geospatial Data]
+
+]
+
+.center[.fancy[.large[
+
+.red[Uncertainty] (BONUS!)
+
+]]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# Data
+
+.leftcol[
+
+Data come from the following packages:
+
+#### - `palmerpenguins`
+
+#### - `fivethirtyeight` 
+
+#### - `ggplot2movies`
+
+]
+
+--
+
+.rightcol[
+
+Or created using `tribble()`
+
+```{r tribble-code, eval=FALSE}
+tribble(
+  ~`variable 1`, ~`variable 2`,
+            "a",            1,
+            "b",            2,
+            "c",            3)
+```
+
+.small[
+
+
+```{r tribble-print, echo=FALSE}
+rmarkdown::paged_table(
+tribble(
+  ~`variable 1`, ~`variable 2`,
+            "a",            1,
+            "b",            2,
+            "c",            3)
+    )
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `palmerpenguins` 
+
+[`palmerpenguins` package website](https://allisonhorst.github.io/palmerpenguins/)
+
+.small[
+
+```{r penguins}
+palmerpenguins::penguins -> penguins
+```
+
+```{r paged_table-penguins, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `fivethirtyeight` 
+
+[`fivethirtyeight` package website](https://fivethirtyeight-r.netlify.app/)
+
+
+.small[
+
+*All datasets are listed below with descriptions*
+
+```{r fivethirtyeight, eval=FALSE}
+datasets("fivethirtyeight")
+```
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+rmarkdown::paged_table(datasets("fivethirtyeight"))
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `ggplot2movies` 
+
+[`ggplot2movies` package website](https://github.com/hadley/ggplot2movies)
+
+.small[
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+
+```{r paged_table-movies_data, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 25%
+
+# Comparing Categories and Distributions
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# .fancy[Amounts]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Bars]
+
+<br>
+
+.large[
+
+> *The bar chart (or graph) is typically used to display counts. Bar charts can be arranged vertically or horizontally, stacked, diverging, or dodged. In `ggplot2`, bar charts can be built using `geom_bar()` or `geom_col()`*
+
+]
+
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Bars]
+
+<br>
+
+.code60[
+
+```{r geom_bar-movies_data-code, eval=FALSE}
+movies_data
+```
+
+]
+
+.small[
+
+```{r geom_bar-movies_data-paged, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Bars]
+
+.code50[
+
+```{r labs_geom_bar}
+labs_geom_bar <- labs(x = "MPAA rating", 
+    title = "IMDB movie information/user ratings")
+```
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_bar, fig.show='hide'}
+ggplot(data = movies_data, 
+       aes(x = mpaa)) + 
+    geom_bar(aes(fill = mpaa)) + 
+  labs_geom_bar
+```
+
+]]
+
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_bar, ref.label='geom_bar', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Grouped Bars]
+
+<br>
+
+.large[
+
+> *To create grouped bar charts (compare the values of a numerical variable across the levels of a categorical variable) we can use the [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) function.*
+
+]
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Grouped Bars]
+
+<br>
+
+.code60[
+
+```{r geom_col-movies_data-code, eval=FALSE}
+movies_data
+```
+
+]
+
+.small[
+
+```{r geom_col-movies_data-paged, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Grouped Bars]
+
+.code50[
+
+```{r labs_geom_col}
+labs_geom_col <- labs(x = "MPAA rating", 
+    y = "Average IMDB user rating",
+    title = "IMDB movie information/user ratings")
+```
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_col, fig.show='hide'}
+ggplot(data = movies_data,
+           aes(x = mpaa, 
+               y = rating)) + 
+    geom_col(aes(fill = mpaa)) + 
+    labs_geom_col
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_col, ref.label='geom_col', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+<br>
+
+.large[
+
+> *We can also use bars to look at numeric and categorical variables using `geom_bar()` by setting `fill` argument.*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+<br>
+
+.code60[
+
+```{r stacked-bars-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r stacked-bars-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+
+.code50[
+
+```{r labs_geom_bar_stacked}
+labs_geom_bar_stacked <- labs(x = "Flipper length (millimeters)",
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[.code60[
+
+```{r stacked-bars, fig.show='hide'}
+# remove missing sex
+penguins_stacked <- filter(penguins,
+                        !is.na(sex))
+ggplot(data = penguins_stacked,
+      aes(x = flipper_length_mm,
+       fill = sex)) +
+    geom_bar() + 
+    labs_geom_bar_stacked
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-stacked-bars, ref.label='stacked-bars', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+<br>
+
+.large[
+
+> *We can extend `geom_bar()` by setting the `y` to a numeric variable and using both the `x` and `fill` aesthetics  (two categorical variables).*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+<br>
+
+.code60[
+
+```{r stacked-bars-2-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r stacked-bars-2-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Stacked Bars]
+
+.code50[
+
+```{r geom_bar_stacked_2}
+geom_bar_stacked_2 <- labs(x = "Island in Palmer Archipelago",
+    y = "Flipper length (millimeters)",
+    title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[
+.code60[
+
+```{r stacked-bars-2, fig.show='hide'}
+ggplot(data = penguins,
+      aes(fill = sex, 
+          x = island,
+          y = flipper_length_mm)) + 
+# use this to determine how many
+# sex values are NA (and in what
+# categories)
+    geom_bar(position = "stack", 
+             stat = "identity") + 
+    geom_bar_stacked_2
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-stacked-bars-2, ref.label='stacked-bars-2', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars]
+
+<br>
+
+.large[
+
+> *If you have a numeric variable with positive and negative values, consider using diverging bars with `geom_bar()`*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars]
+
+<br>
+
+.leftcol45[
+.code50[
+
+```{r unisex_names_diverging-code, eval=FALSE}
+unisex_names <- fivethirtyeight::unisex_names
+unisex_names_diff <- mutate(unisex_names, 
+     male_female_diff = male_share - female_share,
+     diff_cat = if_else(
+                  male_female_diff > 0, 
+                  true = "More common male name", 
+                  false = "More common female name"))
+sample_names <- slice_sample(unisex_names_diff, n = 10)
+```
+
+]]
+
+.rightcol55[
+.small[
+
+```{r unisex_names_diverging-paged, echo=FALSE}
+unisex_names <- fivethirtyeight::unisex_names
+unisex_names_diff <- mutate(unisex_names, 
+       male_female_diff = male_share - female_share,
+       diff_cat = if_else(male_female_diff > 0, 
+                         true = "More common male name", 
+                         false = "More common female name"))
+sample_names <- slice_sample(unisex_names_diff, n = 10)
+rmarkdown::paged_table(sample_names)
+```
+
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars]
+
+.code50[
+
+```{r labs_geom_bar_diverg}
+labs_geom_bar_diverg <- labs(x = "Name",
+  y = "Male share - female share", 
+  title = "Most Common Unisex Names In America",
+  fill = "Difference category")
+```
+
+]
+
+.leftcol45[
+.code50[
+
+```{r geom_bar_diverging, fig.show='hide'}
+ggplot(data = sample_names,
+      aes(x = reorder(x = name, 
+               male_female_diff),
+      # reorder this by x
+      y =  male_female_diff,
+      label = diff_cat)) +
+  geom_bar(
+      aes(fill = diff_cat),
+          stat = "identity",
+         width = .5) + 
+  labs_geom_bar_diverg
+```
+
+]]
+
+--
+
+.rightcol55[
+.border[
+
+```{r plot-geom_bar_diverging, ref.label='geom_bar_diverging', echo=FALSE, fig.align='center', out.width='100%', out.height='100%'}
+```
+
+]]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars (vertical)]
+
+<br>
+
+.leftcol40[
+.code40[
+
+```{r unisex_names_diverging_vertical-code, eval=FALSE}
+unisex_names <- fivethirtyeight::unisex_names
+unisex_names_diff <- mutate(unisex_names, 
+       male_female_diff = male_share - female_share,
+       diff_cat = if_else(male_female_diff > 0, 
+                         true = "More common male name", 
+                         false = "More common female name"))
+sample_names <- slice_sample(unisex_names_diff, n = 20)
+```
+
+]]
+
+.rightcol60[
+.small[
+
+```{r unisex_names_diverging_vertical-paged, echo=FALSE}
+unisex_names <- fivethirtyeight::unisex_names
+unisex_names_diff <- mutate(unisex_names, 
+       male_female_diff = male_share - female_share,
+       diff_cat = if_else(male_female_diff > 0, 
+                         true = "More common male name", 
+                         false = "More common female name"))
+sample_names <- slice_sample(unisex_names_diff, n = 20)
+rmarkdown::paged_table(sample_names)
+```
+
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars (vertical)]
+
+<br>
+
+.large[
+
+> *Diverging bar-charts can be arranged vertically, too*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Amounts:] .fancy[Diverging Bars (vertical)]
+
+.code50[
+
+```{r labs_geom_bar_diverg_vert}
+labs_geom_bar_diverg_vert <- labs(x = "Name", 
+  y = "Male share - female share", 
+  title = "Most Common Unisex Names In America",
+  fill = "Difference category")
+```
+
+]
+
+.leftcol35[.code50[
+
+```{r geom_bar_diverging_vertical, fig.show='hide'}
+ggplot(data = sample_names,
+      aes(x = male_female_diff,
+      # reorder this by x
+      y =  reorder(x = name, 
+               male_female_diff),
+      label = diff_cat)) +
+  geom_bar(
+      aes(fill = diff_cat),
+          stat = "identity",
+         width = .5) + 
+  labs_geom_bar_diverg_vert
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_bar_diverging_vertical, ref.label='geom_bar_diverging_vertical', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 25%
+
+# Comparing Categories and Distributions
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# .fancy[Distributions]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Histograms]
+
+<br>
+
+> *Histograms use bars, but the `x` axis is divided into 'bins' that cover the range of the variable. The standard number of bins is `30` (but you should experiment to see how many bins fit your variable's distribution). In `ggplot2`, the geom for creating histograms is `geom_histogram()`*
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Histograms]
+
+<br>
+
+.code60[
+
+```{r penguins-geom_histogram-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r penguins-geom_histogram-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Histograms]
+
+.code60[
+
+```{r labs_histogram}
+labs_histogram <- labs(x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+```
+
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_histogram, fig.show='hide'}
+ggplot(data = penguins,
+     aes(x = flipper_length_mm)) + 
+     geom_histogram() + 
+     labs_histogram
+```
+
+]
+]
+
+--
+
+.rightcol65[.border[
+
+```{r plot-geom_histogram, ref.label='geom_histogram', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Frequency Polygon]
+
+<br><br>
+
+> *Frequency polygons (`geom_freqpoly()`) are similar to histograms, but use lines instead of bars to represent the variable distribution.*
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Frequency Polygon]
+
+<br>
+
+.code60[
+
+```{r geom_freqpoly-penguins-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r geom_freqpoly-penguins-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Frequency Polygon]
+
+.code60[
+
+```{r labs_freqpoly}
+labs_freqpoly <- labs(x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_freqpoly, fig.show='hide'}
+ggplot(data = penguins,
+      aes(x = flipper_length_mm)) + 
+    geom_freqpoly() +
+    labs_freqpoly
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_freqpoly, ref.label='geom_freqpoly', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Frequency Polygon]
+
+.code50[
+
+```{r labs_freqpoly_2}
+labs_freqpoly_2 <- labs(x = "Flipper length (millimeters)",
+  color = "Penguins species",
+  title = "Adult foraging penguins")
+```
+
+]
+
+--
+
+.leftcol35[
+
+.small[*Frequency polygons are helpful when we want to look at a continuous variable across the levels of a categorical variable*]
+
+.code50[
+
+```{r geom_freqpoly_group, fig.show='hide'}
+ggplot(data = penguins, 
+       aes(x = flipper_length_mm)) + 
+  geom_freqpoly(
+    aes(color = species, 
+        group = species)) + 
+  labs_freqpoly_2
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_freqpoly_group, ref.label='geom_freqpoly_group', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Dot-Plots]
+
+<br>
+
+> *Dot-plots are similar to histograms and frequency polygons, except instead of using bars or lines, they use dots to represent the values of a given variable.*
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Dot-Plots]
+
+<br>
+
+.code60[
+
+```{r geom_dotplot-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r geom_dotplot-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Dot-Plots]
+
+.code50[
+
+```{r labs_dotplot}
+labs_dotplot <- labs(x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+```
+
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_dotplot, fig.show='hide'}
+ggplot(data = penguins,
+    aes(x = flipper_length_mm)) +
+    geom_dotplot() + 
+    labs_dotplot
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_dotplot, ref.label='geom_dotplot', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Dot-Plots]
+
+.leftcol[
+
+> .small[*The default setting is '1/30 of the range of the data', but we can adjust this with `binwidth` or `method = "histodot"`.*]
+
+> .small[*We can also use dot-plots to look at the range of a continuous (numerical) variable across the levels of a categorical (character) variable.*]
+
+]
+
+--
+
+.rightcol[
+
+.code50[
+
+```{r geom_dotplot-stackgroups-code, eval=FALSE}
+penguins_histodot <- filter(penguins, !is.na(sex))
+```
+
+]
+
+.small[
+
+```{r geom_dotplot-stackgroups-paged, echo=FALSE}
+penguins_histodot <- filter(penguins, !is.na(sex))
+rmarkdown::paged_table(penguins_histodot)
+```
+
+]]
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Dot-Plots]
+
+.code50[
+
+```{r labs_histodot}
+labs_histodot <- labs(x = "Flipper length (millimeters)",
+  fill = "Sex",
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[.code60[
+
+```{r penguins_histodot_stackgroups, fig.show='hide'}
+ggplot(data = penguins_histodot, 
+    aes(x = flipper_length_mm,
+        fill = factor(sex))) +
+  geom_dotplot(
+        stackgroups = TRUE,
+        binwidth = 1,
+        method = "histodot") + 
+  labs_histodot
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_dotplot-stackgroups, ref.label='penguins_histodot_stackgroups', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Bee-swarm Plots]
+
+<br>
+
+> *We can also use dots to show the spread of values for a particular variable with [`bee-swarm`](https://github.com/eclarke/ggbeeswarm) plots. These display the distribution of numeric values across the levels of a categorical variable.*
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Bee-swarm Plots]
+
+<br>
+
+.code60[
+
+```{r ggbeeswarm-penguins-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r ggbeeswarm-penguins-paged, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Bee-swarm Plots]
+
+.code50[
+
+```{r labs_beeswarm}
+labs_beeswarm <- labs(x = "Island in Palmer Archipelago, Antarctica",
+  y = "Body mass (grams)",
+  color = "Penguin sex (female, male)",
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[.code60[
+
+```{r geom_beeswarm, fig.show='hide'}
+ggplot(data = penguins, 
+       aes(x = island, 
+           y = body_mass_g, 
+           color = island)) + 
+  ggbeeswarm::geom_beeswarm(
+      alpha = 1/2) + 
+  labs_beeswarm
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_beeswarm, ref.label='geom_beeswarm', echo=FALSE, fig.align='center', out.width='85%', out.height='85%'}
+```
+
+]]
+
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Density Plots]
+
+<br>
+
+> *Density plots are similar to frequency polygons and histograms, except the line has been 'smoothed.' Instead of dividing the `x` axis into discrete quantitative ‘bins’ to create groups for the variable values, density plots transform the distribution according to a 'bandwidth' parameter.*
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Density Plots]
+
+<br>
+
+.code60[
+
+```{r geom_density-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r geom_density-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Density Plots]
+
+.code50[
+
+```{r labs_density}
+labs_density <- labs(
+  x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[.code60[
+
+```{r geom_density, fig.show='hide'}
+ggplot(data = penguins, 
+      aes(x = flipper_length_mm)) + 
+      geom_density() + 
+      labs_density
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_density, ref.label='geom_density', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Density Plots]
+
+.small[
+
+> *Similar to frequency polygons, `geom_density()` is useful when we want to look at the distribution of a continuous variable across the levels of a categorical variable*
+
+]
+
+--
+
+.leftcol45[
+.small[
+
+*We can set the `fill` argument to a categorical variable, and use the `alpha` to handle the overlapping areas.*
+
+]
+
+.code50[
+
+```{r geom_density-alpha, fig.show='hide'}
+labs_density_alpha <- labs(
+  x = "Flipper length (millimeters)",
+  fill = "Penguin sex (female, male)",
+  title = "Adult foraging penguins")
+# remove missing sex
+penguins_density <- filter(penguins, !is.na(sex))
+ggplot(data = penguins_density, 
+       aes(x = flipper_length_mm, 
+        fill = sex)) + 
+        geom_density(alpha = 1/3) + 
+  labs_density_alpha
+```
+
+]]
+
+--
+
+.rightcol55[
+.border[
+
+```{r plot-geom_density-alpha, ref.label='geom_density-alpha', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Ridgeline Plots]
+
+<br>
+
+.large[
+
+> If we want to plot density curves but retain the interpretability of the axes, consider comparing multiple distributions using [`ridgeline plots`](https://wilkelab.org/ggridges/) (`geom_density_ridges()`)
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Ridgeline Plots]
+
+.code60[
+
+```{r geom_density_ridges-penguins-code, eval=FALSE}
+penguins
+```
+
+]
+
+.small[
+
+```{r geom_density_ridges-penguins-paged, echo=FALSE}
+rmarkdown::paged_table(penguins)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Ridgeline Plots]
+
+.code50[
+
+```{r labs_density_ridges}
+labs_density_ridges <- labs(x = "Flipper length (millimeters)",
+  y = "Island in Palmer Archipelago, Antarctica",
+  title = "Adult foraging penguins")
+```
+
+]
+
+.leftcol35[.code60[
+
+```{r geom_density_ridges, fig.show='hide'}
+# remove missing island
+penguins_density_ridges <- filter(penguins, !is.na(island))
+ggplot(data = penguins_density_ridges,
+       aes(x = bill_length_mm, 
+           y = island, 
+        fill = island)) +
+    # adjust alpha
+  ggridges::geom_density_ridges(alpha = 2/3) + 
+  labs_density_ridges
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_density_ridges, ref.label='geom_density_ridges', echo=FALSE, fig.align='center', out.width='85%', out.height='85%'}
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+<br>
+
+.large[
+
+> *Box-plots (sometimes called box-and-whisker plots) are great because they display a collection of statistics in a single graph. We're going to build a box-plot of a single numeric variable and review it's contents.*
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+<br>
+
+.code60[
+
+```{r geom_boxplot-code, eval=FALSE}
+movies_data
+```
+
+]
+
+.small[
+
+```{r geom_boxplot-paged, echo=FALSE}
+rmarkdown::paged_table(movies_data)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+.code50[
+
+```{r labs_boxplot}
+labs_boxplot <- labs(y = "length", 
+   title = "IMDB Movie information and user ratings")
+```
+
+]
+
+.leftcol35[
+.code60[
+
+```{r geom_boxplot, fig.show='hide'}
+ggplot(data = movies_data, 
+    # place an empty string in the
+    # x axis
+           aes(x = ' ', 
+    # place the length on the y
+               y = length)) +
+    geom_boxplot() + 
+    labs_boxplot
+```
+
+]]
+
+--
+
+.rightcol65[
+.border[
+
+```{r plot-geom_boxplot, ref.label='geom_boxplot', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+.leftcol[
+
+.small[
+
+> *The table below shows the 25th percentile, the median, the 75th percentile, the IQR, and a histogram of the `length` column from the `movies_data` dataset.*
+
+]
+
+.small[
+
+```{r skim-length-output, echo=FALSE}
+lgnth_skim <- skimr::skim(movies_data$length)
+LengthBoxStats <- select(lgnth_skim,
+     `25th` = numeric.p25, Median = numeric.p50,
+     `75th` = numeric.p75, Histogram = numeric.hist) %>%
+     mutate(IQR = IQR(movies_data$length, na.rm = TRUE)) %>%
+     select(`25th`, Median, `75th`, IQR, Histogram)
+rmarkdown::paged_table(LengthBoxStats)
+```
+
+]
+
+.small[
+
+> *These three horizontal lines give us a picture of the 'spread' of the data. If there is equal distance on either side of the middle (`Median`) line, this tells us the distribution is symmetrical.*
+
+]
+]
+
+--
+
+.rightcol[
+
+.small[
+
+> Use these numbers to help you interpret the structure of the box-plot. 
+
+```{r boxplot-diagram, echo=FALSE, fig.align='center', out.width='100%', out.height='100%'}
+knitr::include_graphics(path = "images/boxplot-diagram.png")
+```
+
+]]
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+
+.small[
+
+> *As we can see, the box-plot combines multiple summary statistics.*
+
+]
+
+--
+
+<br>
+
+.small[
+
+> *The 25th percentile (first quartile), the median (50th percentile or second quartile), and the 75th percentile (third quartile) values are common to all box-plots.*
+
+]
+
+--
+
+<br>
+
+.small[
+
+> *In `ggplot2`, values that fall more than 1.5 times the IQR are displayed as individual points (aka .green[*outliers*]). The lines extending from the bottom and top of the main box represent the last non-outlier value in the distribution.*
+
+]
+
+
+---
+class: left, top
+background-image: url(images/ggplot2.png)
+background-position: 95% 8%
+background-size: 6%
+
+# .red[Distributions:] .fancy[Box-plots]
+
+> .small[*Compare the four graphs of `length` from `movie_data` below to the box-plot:*]
+
+```{r ggp_box-ggp_freqp, fig.align='center', out.width='68%', out.height='68%', echo=FALSE, fig.width=8, fig.height=4, eval=FALSE}
+small_ggp2_theme <- theme(
+  text = element_text(size = 7), 
+  axis.text = element_text(size = 7), 
+  axis.title = element_text(size = 7), 
+  plot.title = element_text(size = 8),
+  legend.text = element_text(size = 7), 
+  legend.title = element_text(size = 7))
+ggp_point <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_point() + 
+    labs(y = "length", title = "geom_point()") + 
+    small_ggp2_theme
+ggp_box <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_boxplot() + 
+    labs(y = "length", title = "geom_boxplot()") + 
+    small_ggp2_theme
+ggp_freqp <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_freqpoly() + coord_flip() +
+    labs(x = "length", title = "geom_freqpoly()") + 
+    small_ggp2_theme
+ggp_hist <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_histogram() + coord_flip() +
+    labs(x = "length", title = "geom_histogram()") + 
+    small_ggp2_theme
+ggp_density <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_density() + coord_flip() +
+    labs(x = "length", y = " ", title = "geom_density()") + 
+    small_ggp2_theme
+ggp_box <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_boxplot() + 
+    labs(y = "length", title = "geom_boxplot()") + 
+    small_ggp2_theme
+patchwork::wrap_plots(ggp_point, ggp_freqp, 
+                      ggp_hist, ggp_density, ggp_box, 
+                      ncol = 5) 
+```
+
+```{r boxplot-comparisons, echo=FALSE, fig.align='center', out.width='70%', out.height='70%'}
+knitr::include_graphics(path = "images/boxplot-comparisons.png")
+```
+
