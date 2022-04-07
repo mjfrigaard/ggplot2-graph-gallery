@@ -1,8 +1,8 @@
 ---
-title: "ODSC: ggplot2 Graph Gallery"
+title: "ggplot2 Graph Gallery"
 subtitle: "Trends, correlations and connections: X–Y relationships"
 author: "Martin Frigaard"
-institute: "California State University | BioMarin"
+institute: "Paradigm Data Group"
 output:
   xaringan::moon_reader:
     css:
@@ -22,13 +22,13 @@ output:
 library(metathis)
 meta() %>%
   meta_general(
-    description = "ODSC: ggplot2 Graph Gallery",
+    description = "ggplot2 Graph Gallery",
     generator = "xaringan and remark.js"
   ) %>%
-  meta_name("github-repo" = "mjfrigaard/odsc-ggplot2-2022/tree/gh-pages") %>%
+  meta_name("github-repo" = "https://github.com/mjfrigaard/ggplot2-graph-gallery/") %>%
   meta_social(
-    title = "ODSC: Exploratory Data Visualization with ggplot2",
-    url = "https://mjfrigaard.github.io/odsc-ggplot2-2022/",
+    title = "ggplot2 Graph Gallery: Trends, correlations and connections: X–Y relationships",
+    url = "https://mjfrigaard.github.io/ggplot2-graph-gallery/",
     og_type = "website",
     og_author = "Martin Frigaard",
     twitter_card_type = "summary",
