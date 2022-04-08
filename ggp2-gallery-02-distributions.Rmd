@@ -1,7 +1,7 @@
 ---
-title: "ODSC: ggplot2 Graph Gallery"
-subtitle: "Categories and distributions: distributions"
-author: "Martin Frigaard & Peter Spangler"
+title: "ggplot2 Graph Gallery"
+subtitle: "Categories and distributions: Distributions"
+author: "Martin Frigaard"
 institute: "Paradigm Data Group"
 output:
   xaringan::moon_reader:
@@ -22,15 +22,15 @@ output:
 library(metathis)
 meta() %>%
   meta_general(
-    description = "ODSC: ggplot2 Graph Gallery",
+    description = "ggplot2 Graph Gallery",
     generator = "xaringan and remark.js"
   ) %>%
-  meta_name("github-repo" = "mjfrigaard/odsc-ggplot2-2022/tree/gh-pages") %>%
+  meta_name("github-repo" = "https://github.com/mjfrigaard/ggplot2-graph-gallery/") %>%
   meta_social(
-    title = "ODSC: Exploratory Data Visualization with ggplot2",
-    url = "https://mjfrigaard.github.io/odsc-ggplot2-2022/",
+    title = "ggplot2 Graph Gallery: Categories and distributions: Distributions",
+    url = "https://mjfrigaard.github.io/ggplot2-graph-gallery/",
     og_type = "website",
-    og_author = "Martin Frigaard & Peter Spangler",
+    og_author = "Martin Frigaard",
     twitter_card_type = "summary",
     twitter_creator = "@mjfrigaard"
   )
@@ -110,7 +110,7 @@ class: title-slide, center, middle, inverse
 
 <br>
 
-.large[by Martin Frigaard & Peter Spangler]
+.large[by Martin Frigaard]
 
 Written: `r dateWritten`
 
@@ -118,9 +118,9 @@ Updated: `r today`
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Resources:
 
@@ -151,9 +151,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: *The ‘CHRTS’ Families of Chart Types*
 
@@ -188,9 +188,9 @@ From *"Data Visualisation: A Handbook for Data Driven Design"*, Andy Kirk (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: Directory of Visualizations
 
@@ -228,9 +228,9 @@ From *"Fundamentals of Data Visualization"*, Claus O. Wilke (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Comprehensive Graph Gallery
 
@@ -272,9 +272,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Data
 
@@ -321,9 +321,9 @@ tribble(
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Load data packages 
 
@@ -339,7 +339,7 @@ library(ggplot2movies)
 class: left, top
 background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `palmerpenguins` 
 
@@ -359,9 +359,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `fivethirtyeight` 
 
@@ -385,9 +385,9 @@ rmarkdown::paged_table(datasets("fivethirtyeight"))
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `ggplot2movies` 
 
@@ -411,7 +411,7 @@ rmarkdown::paged_table(movies_data)
 
 ---
 class: inverse, center, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 50% 50%
 background-size: 25%
 
@@ -423,9 +423,9 @@ background-size: 25%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Histograms]
 
@@ -435,9 +435,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Histograms]
 
@@ -462,9 +462,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Histograms]
 
@@ -512,9 +512,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Frequency Polygon]
 
@@ -526,9 +526,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Frequency Polygon]
 
@@ -552,9 +552,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Frequency Polygon]
 
@@ -602,9 +602,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Frequency Polygon]
 
@@ -655,9 +655,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Dot-Plots]
 
@@ -667,9 +667,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Dot-Plots]
 
@@ -693,9 +693,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Dot-Plots]
 
@@ -741,9 +741,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Dot-Plots]
 
@@ -769,9 +769,9 @@ rmarkdown::paged_table(penguins_histodot)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Dot-Plots]
 
@@ -827,9 +827,9 @@ ggplot(data = penguins_histodot,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Bee-swarm Plots]
 
@@ -840,9 +840,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Bee-swarm Plots]
 
@@ -866,9 +866,9 @@ rmarkdown::paged_table(movies_data)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Bee-swarm Plots]
 
@@ -922,9 +922,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Density Plots]
 
@@ -934,9 +934,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Density Plots]
 
@@ -960,9 +960,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Density Plots]
 
@@ -1009,9 +1009,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Density Plots]
 
@@ -1064,9 +1064,9 @@ ggplot(data = penguins_density,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Ridgeline Plots]
 
@@ -1081,9 +1081,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Ridgeline Plots]
 
@@ -1105,9 +1105,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Ridgeline Plots]
 
@@ -1160,9 +1160,9 @@ ggplot(data = penguins_density_ridges,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1176,9 +1176,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1202,9 +1202,9 @@ rmarkdown::paged_table(movies_data)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1257,9 +1257,9 @@ ggplot(data = movies_data,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1310,9 +1310,9 @@ knitr::include_graphics(path = "images/boxplot-diagram.png")
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1352,9 +1352,9 @@ knitr::include_graphics(path = "images/boxplot-diagram.png")
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 
@@ -1405,9 +1405,9 @@ ggplot(data = movies_data,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Distributions:] .fancy[Box-plots]
 

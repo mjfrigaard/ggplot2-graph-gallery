@@ -1,7 +1,7 @@
 ---
 title: "ggplot2 Graph Gallery"
-subtitle: "Categories and distributions: amounts"
-author: "Martin Frigaard & Peter Spangler"
+subtitle: "Categories and distributions: Amounts"
+author: "Martin Frigaard"
 institute: "Paradigm Data Group"
 output:
   xaringan::moon_reader:
@@ -26,12 +26,12 @@ meta() %>%
     description = "ggplot2 Graph Gallery",
     generator = "xaringan and remark.js"
   ) %>%
-  meta_name("github-repo" = "mjfrigaard/odsc-ggplot2-2022/tree/gh-pages") %>%
+  meta_name("github-repo" = "https://github.com/mjfrigaard/ggplot2-graph-gallery/") %>%
   meta_social(
-    title = "ODSC: Exploratory Data Visualization with ggplot2",
-    url = "https://mjfrigaard.github.io/odsc-ggplot2-2022/",
+    title = "ggplot2 Graph Gallery: Categories and distributions: Amounts",
+    url = "https://mjfrigaard.github.io/ggplot2-graph-gallery/",
     og_type = "website",
-    og_author = "Martin Frigaard & Peter Spangler",
+    og_author = "Martin Frigaard",
     twitter_card_type = "summary",
     twitter_creator = "@mjfrigaard"
   )
@@ -111,7 +111,7 @@ class: title-slide, center, middle, inverse
 
 <br>
 
-.large[by Martin Frigaard & Peter Spangler]
+.large[by Martin Frigaard]
 
 Written: `r dateWritten`
 
@@ -119,9 +119,9 @@ Updated: `r today`
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Resources :
 
@@ -152,9 +152,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: *The ‘CHRTS’ Families of Chart Types*
 
@@ -189,9 +189,9 @@ From *"Data Visualisation: A Handbook for Data Driven Design"*, Andy Kirk (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: Directory of Visualizations
 
@@ -228,9 +228,9 @@ From *"Fundamentals of Data Visualization"*, Claus O. Wilke (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Comprehensive Graph Gallery
 
@@ -272,9 +272,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Data
 
@@ -321,9 +321,9 @@ tribble(
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Load data packages 
 
@@ -339,7 +339,7 @@ library(ggplot2movies)
 class: left, top
 background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `palmerpenguins` 
 
@@ -359,9 +359,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `fivethirtyeight` 
 
@@ -385,9 +385,9 @@ rmarkdown::paged_table(datasets("fivethirtyeight"))
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `ggplot2movies` 
 
@@ -422,9 +422,9 @@ background-size: 25%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Bars]
 
@@ -439,9 +439,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Bars]
 
@@ -465,9 +465,9 @@ rmarkdown::paged_table(movies_data)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Bars]
 
@@ -516,9 +516,9 @@ ggplot(data = movies_data,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Grouped Bars]
 
@@ -534,9 +534,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Grouped Bars]
 
@@ -560,9 +560,9 @@ rmarkdown::paged_table(movies_data)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Grouped Bars]
 
@@ -611,9 +611,9 @@ ggplot(data = movies_data,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -627,9 +627,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -653,9 +653,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -707,9 +707,9 @@ ggplot(data = penguins_stacked,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -723,9 +723,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -749,9 +749,9 @@ rmarkdown::paged_table(penguins)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Stacked Bars]
 
@@ -806,9 +806,9 @@ ggplot(data = penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars]
 
@@ -822,9 +822,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars]
 
@@ -866,9 +866,9 @@ rmarkdown::paged_table(sample_names)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars]
 
@@ -925,9 +925,9 @@ ggplot(data = sample_names,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars (vertical)]
 
@@ -968,9 +968,9 @@ rmarkdown::paged_table(sample_names)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars (vertical)]
 
@@ -984,9 +984,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Amounts:] .fancy[Diverging Bars (vertical)]
 

@@ -11,4 +11,61 @@ output:
 
 <br><br>
 
-# `ggplot2` graph gallery
+### *The ‘CHRTS’ Families of Chart Types*
+
+From [Data Visualisation: A Handbook for Data Driven Design](https://www.visualisingdata.com/book/) by Andy Kirk (2019)
+
+- Comparing categories and distributions
+
+- Hierarchies/part-to-whole relationships
+
+- Correlations and connections
+
+- Trends and intervals over time
+
+- Maps, overlays, and/or distortions
+
+<br><br>
+
+### *Directory of Visualizations*
+
+From [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke (2019)
+
+- Amounts
+
+- Distributions
+
+- Proportions
+
+- X–Y relationships
+
+- Geospatial Data
+
+- Uncertainty
+
+<br><br>
+
+### Comprehensive Graph Gallery
+
+
+Comparing categories and values
+
+- Amounts
+
+- Distributions
+
+Hierarchies and proportions
+
+- Part-to-whole relationships  
+
+Trends, correlations and connections
+
+- X–Y relationships  
+
+Maps, overlays, and distortions  
+
+- Geospatial Data  
+
+Statistical measures
+
+- Uncertainty

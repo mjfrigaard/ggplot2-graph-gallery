@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>ODSC: ggplot2 Graph Gallery</title>
+    <title>ggplot2 Graph Gallery</title>
     <meta charset="utf-8" />
     <meta name="author" content="Martin Frigaard &amp; Peter Spangler" />
     <script src="site_libs/header-attrs/header-attrs.js"></script>
@@ -9,18 +9,18 @@
     <meta name="description" content="ODSC: ggplot2 Graph Gallery"/>
     <meta name="generator" content="xaringan and remark.js"/>
     <meta name="github-repo" content="mjfrigaard/odsc-ggplot2-2022/tree/gh-pages"/>
-    <meta name="twitter:title" content="ODSC: Exploratory Data Visualization with ggplot2"/>
+    <meta name="twitter:title" content="ggplot2 Graph Gallery: Hierarchies/proportions: part-to-whole relationships"/>
     <meta name="twitter:description" content="ODSC: ggplot2 Graph Gallery"/>
-    <meta name="twitter:url" content="https://mjfrigaard.github.io/odsc-ggplot2-2022/"/>
+    <meta name="twitter:url" content="https://mjfrigaard.github.io/ggplot2-graph-gallery/"/>
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:creator" content="@mjfrigaard"/>
     <meta name="twitter:site" content="@mjfrigaard"/>
-    <meta property="og:title" content="ODSC: Exploratory Data Visualization with ggplot2"/>
+    <meta property="og:title" content="ggplot2 Graph Gallery: Hierarchies/proportions: part-to-whole relationships"/>
     <meta property="og:description" content="ODSC: ggplot2 Graph Gallery"/>
-    <meta property="og:url" content="https://mjfrigaard.github.io/odsc-ggplot2-2022/"/>
+    <meta property="og:url" content="https://mjfrigaard.github.io/ggplot2-graph-gallery/"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="en_US"/>
-    <meta property="article:author" content="Martin Frigaard &amp; Peter Spangler"/>
+    <meta property="article:author" content="Martin Frigaard"/>
     <link href="site_libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="site_libs/tile-view/tile-view.js"></script>
     <link href="site_libs/panelset/panelset.css" rel="stylesheet" />
@@ -60,12 +60,12 @@ layout: true
 name: title-slide
 class: title-slide, center, middle, inverse
 
-# ODSC: ggplot2 Graph Gallery
+# ggplot2 Graph Gallery
 #.fancy[Hierarchies/proportions: part-to-whole relationships]
 
 &lt;br&gt;
 
-.large[by Martin Frigaard &amp; Peter Spangler]
+.large[by Martin Frigaard]
 
 Written: September 21 2021
 
@@ -73,9 +73,9 @@ Updated: April 07 2022
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Resources :
 
@@ -106,9 +106,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: *The ‘CHRTS’ Families of Chart Types*
 
@@ -143,9 +143,9 @@ From *"Data Visualisation: A Handbook for Data Driven Design"*, Andy Kirk (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Graph Categories: Directory of Visualizations
 
@@ -183,9 +183,9 @@ From *"Fundamentals of Data Visualization"*, Claus O. Wilke (2019)
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Comprehensive Graph Gallery
 
@@ -227,9 +227,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # Data
 
@@ -273,9 +273,9 @@ tribble(
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ### Load data packages 
 
@@ -292,7 +292,7 @@ library(ggplot2movies)
 class: left, top
 background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `palmerpenguins` 
 
@@ -315,9 +315,9 @@ palmerpenguins::penguins -&gt; penguins
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `fivethirtyeight` 
 
@@ -344,9 +344,9 @@ datasets("fivethirtyeight")
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 ## `ggplot2movies` 
 
@@ -386,9 +386,9 @@ background-size: 25%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Pie charts]
 
@@ -417,9 +417,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Pie charts]
 
@@ -456,9 +456,9 @@ movies_mpaa_avg_rating &lt;- mutate(movies_mpaa_avg_rating,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Pie charts]
 
@@ -518,9 +518,9 @@ ggpubr::ggpie(data = movies_mpaa_avg_rating,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Stacked-density]
 
@@ -534,9 +534,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Stacked-density]
 
@@ -567,9 +567,9 @@ penguins_stacked_density &lt;- filter(penguins, !is.na(species))
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Stacked-density]
 
@@ -623,9 +623,9 @@ ggplot(data = penguins_stacked_density,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Waffle chart]
 
@@ -639,9 +639,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Waffle chart]
 
@@ -686,9 +686,9 @@ penguins &lt;- mutate(penguins, species = as.character(species))
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Waffle chart]
 
@@ -747,9 +747,9 @@ ggplot(waffle_penguins,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Mosaic plot]
 
@@ -765,9 +765,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Mosaic plot]
 
@@ -800,9 +800,9 @@ flying_mosaic &lt;- filter(flying,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Mosaic plot]
 
@@ -863,9 +863,9 @@ ggplot(data = flying_mosaic) +
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Mosaic plot]
 
@@ -892,9 +892,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
@@ -908,9 +908,9 @@ background-size: 6%
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
@@ -942,9 +942,9 @@ treemap_penguins_counts &lt;- ungroup(
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
@@ -995,9 +995,9 @@ ggplot(treemap_penguins_counts,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
@@ -1036,9 +1036,9 @@ ggplot(treemap_penguins_counts,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
@@ -1086,9 +1086,9 @@ ggplot(treemap_penguins_counts,
 
 ---
 class: left, top
-background-image: url(images/ggplot2.png)
+background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
-background-size: 6%
+background-size: 7%
 
 # .red[Part-to-whole relationships:] .fancy[Treemaps]
 
