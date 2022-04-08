@@ -9,43 +9,27 @@ output:
     css: styles.css
 ---
 
-<br><br>
+<style type="text/css">
+.title {
+  display: none;
+}
 
-### *The ‘CHRTS’ Families of Chart Types*
+#getting-started img {
+  margin-right: 10px;
+}
 
-From [Data Visualisation: A Handbook for Data Driven Design](https://www.visualisingdata.com/book/) by Andy Kirk (2019)
+</style>
 
-- Comparing categories and distributions
+<div class="row" style="padding-top: 30px;">
+<div class="col-sm-6">
 
-- Hierarchies/part-to-whole relationships
 
-- Correlations and connections
 
-- Trends and intervals over time
 
-- Maps, overlays, and/or distortions
 
-<br><br>
-
-### *Directory of Visualizations*
-
-From [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke (2019)
-
-- Amounts
-
-- Distributions
-
-- Proportions
-
-- X–Y relationships
-
-- Geospatial Data
-
-- Uncertainty
+# `ggplot2`: A Comprehensive Graph Gallery
 
 <br><br>
-
-### Comprehensive Graph Gallery
 
 
 Comparing categories and values
@@ -69,3 +53,23 @@ Maps, overlays, and distortions
 Statistical measures
 
 - Uncertainty
+
+<br>
+
+### References 
+
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke (2019)
+
+- [Data Visualisation: A Handbook for Data Driven Design](https://www.visualisingdata.com/book/) by Andy Kirk (2019)
+
+</div>
+<div class="col-sm-6">
+
+![](images/pdg-hex.png)
+
+
+<!--
+```{r pdg-hex-png, echo=FALSE, fig.align='right', out.height='10%', out.height='10%'}
+knitr::include_graphics("images/pdg-hex.png")
+```
+-->
