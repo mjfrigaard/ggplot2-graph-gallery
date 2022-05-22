@@ -1,0 +1,155 @@
+---
+title: "`ggplot2` Graph Gallery"
+subtitle: "Trends, correlations and connections: *X–Y relationships*"
+author: 
+  - "Martin Frigaard"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/extra_styles.css
+      - css/pdg_duo_accent_inverse.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE,
+  fig.width = 13.504, 
+  fig.align = 'center',
+  fig.height = 4.8,
+  fig.retina = 3.5 # Better figure resolution
+)
+library(reactable)
+library(tidyverse)
+options(reactable.theme = reactableTheme(
+  color = "hsl(233, 9%, 87%)",
+  backgroundColor = "hsl(233, 9%, 19%)",
+  borderColor = "hsl(233, 9%, 22%)",
+  stripedColor = "hsl(233, 12%, 22%)",
+  highlightColor = "hsl(233, 12%, 24%)",
+  inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)")
+))
+library(xaringanthemer)
+xaringanthemer::style_duo_accent_inverse(
+    # inverse_background_color = ""
+    primary_color = "#1da2d8", # electric blue
+    secondary_color = "#0a87b7", #
+    inverse_link_color = "#e9dc3f",
+    code_inline_background_color = "#282828",
+    text_bold_color = "#0C7185", 
+    code_inline_color = "#ff723a", 
+    link_color = "#df4c73",
+    white_color = "#f5f5f5", 
+    text_color = "#def3f6", 
+    outfile = "css/pdg_duo_accent_inverse.css"
+    ) 
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+# fs::dir_tree("../code")
+source("src/copy-slide-images.R")
+source("src/create-movie-data.R")
+source("src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `palmerpenguins` 
+
+[package website](https://allisonhorst.github.io/palmerpenguins/)
+
+```{r create-penguins, eval=FALSE}
+penguins <- palmerpenguins::penguins
+penguins
+```
+
+
+.small[
+
+```{r paged_table-penguins, echo=FALSE}
+# rmarkdown::paged_table(penguins)
+reactable::reactable(penguins, defaultPageSize = 5)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `fivethirtyeight` 
+
+[package website](https://fivethirtyeight-r.netlify.app/)
+
+*All datasets are listed below with descriptions*
+
+.small[
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+# rmarkdown::paged_table()
+x <- datasets("fivethirtyeight")
+reactable::reactable(x, defaultPageSize = 5, searchable = TRUE)
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `ggplot2movies` 
+
+[package website](https://github.com/hadley/ggplot2movies)
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+.small[
+
+```{r paged_table-movies_data, echo=FALSE}
+# rmarkdown::paged_table(movies_data)
+reactable::reactable(movies_data, 
+                     defaultPageSize = 5)
+```
+
+]

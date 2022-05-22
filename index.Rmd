@@ -34,13 +34,13 @@ output:
 
 Comparing categories and values
 
-- Amounts
+- [Amounts](https://mjfrigaard.github.io/ggplot2-graph-gallery/ggp2-amounts.html#1)
 
-- Distributions
+- [Distributions](https://mjfrigaard.github.io/ggplot2-graph-gallery/ggp2-distributions.html#1)
 
-Hierarchies and proportions
+Hierarchies/Part-to-whole relationships
 
-- Part-to-whole relationships  
+- [Proportions](https://mjfrigaard.github.io/ggplot2-graph-gallery/ggp2-proportions.html#1)
 
 Trends, correlations and connections
 

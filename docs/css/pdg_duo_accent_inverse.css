@@ -48,7 +48,7 @@
   --background-color: #000000;
   --link-color: #df4c73;
   --text-bold-color: #0C7185;
-  --code-highlight-color: #a0d2f8;
+  --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #000000;
   --inverse-background-color: #0a87b7;
   --inverse-header-color: #000000;
