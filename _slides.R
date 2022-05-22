@@ -11,8 +11,8 @@ library(pagedown)
 library(tidyverse)
 
 # # render 01-amounts -----------------------------------------------------
-rmarkdown::render('ggp2-gallery-01-amounts.Rmd',  encoding = 'UTF-8')
+pagedown::chrome_print('docs/ggp2-amounts.html', output = "pdfs/ggp2-amounts.pdf")
 # # render 02-distributions -------------------------------------------------
-rmarkdown::render('ggp2-gallery-02-distributions.Rmd',  encoding = 'UTF-8')
+rmarkdown::render('ggp2-distributions.Rmd',  encoding = 'UTF-8')
 # render 03-proportions -------------------------------------------------
 rmarkdown::render('ggp2-gallery-03-proportions.Rmd',  encoding = 'UTF-8')

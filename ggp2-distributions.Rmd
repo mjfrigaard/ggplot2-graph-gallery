@@ -1,0 +1,887 @@
+---
+title: "`ggplot2` Graph Gallery"
+subtitle: "Categories and distributions: *distributions*"
+author: 
+  - "Martin Frigaard"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/extra_styles.css
+      - css/pdg_duo_accent_inverse.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE,
+  fig.width = 13.504, 
+  fig.align = 'center',
+  fig.height = 4.8,
+  fig.retina = 3.5 # Better figure resolution
+)
+library(reactable)
+library(tidyverse)
+options(reactable.theme = reactableTheme(
+  color = "hsl(233, 9%, 87%)",
+  backgroundColor = "hsl(233, 9%, 19%)",
+  borderColor = "hsl(233, 9%, 22%)",
+  stripedColor = "hsl(233, 12%, 22%)",
+  highlightColor = "hsl(233, 12%, 24%)",
+  inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)")
+))
+library(xaringanthemer)
+xaringanthemer::style_duo_accent_inverse(
+    # inverse_background_color = ""
+    primary_color = "#1da2d8", # electric blue
+    secondary_color = "#0a87b7", #
+    inverse_link_color = "#e9dc3f",
+    code_inline_background_color = "#282828",
+    text_bold_color = "#0C7185", 
+    code_inline_color = "#ff723a", 
+    link_color = "#df4c73",
+    white_color = "#f5f5f5", 
+    text_color = "#def3f6", 
+    outfile = "css/pdg_duo_accent_inverse.css"
+    ) 
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+# fs::dir_tree("../code")
+source("src/copy-slide-images.R")
+source("src/create-movie-data.R")
+source("src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `palmerpenguins` 
+
+[package website](https://allisonhorst.github.io/palmerpenguins/)
+
+```{r create-penguins, eval=FALSE}
+penguins <- palmerpenguins::penguins
+penguins
+```
+
+
+.small[
+
+```{r paged_table-penguins, echo=FALSE}
+# rmarkdown::paged_table(penguins)
+reactable::reactable(penguins, defaultPageSize = 5)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `fivethirtyeight` 
+
+[package website](https://fivethirtyeight-r.netlify.app/)
+
+*All datasets are listed below with descriptions*
+
+.small[
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+# rmarkdown::paged_table()
+x <- datasets("fivethirtyeight")
+reactable::reactable(x, defaultPageSize = 5, searchable = TRUE)
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `ggplot2movies` 
+
+[package website](https://github.com/hadley/ggplot2movies)
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+.small[
+
+```{r paged_table-movies_data, echo=FALSE}
+# rmarkdown::paged_table(movies_data)
+reactable::reactable(movies_data, 
+                     defaultPageSize = 5)
+```
+
+]
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 20%
+
+# Comparing Categories and Distributions
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# Distributions
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Histograms
+
+<br>
+
+.large[*Histograms use bars, but the `x` axis is divided into 'bins' that cover the range of the variable. The standard number of bins is `30` (but you should experiment to see how many bins fit your variable's distribution). In `ggplot2`, the geom for creating histograms is `geom_histogram()`*]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Histograms
+
+*Map `flipper_length_mm` to the `x` axis, add the `geom_histogram()` layer and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_histogram, fig.show='hide'}
+labs_histogram <- labs(
+  x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+ggplot(data = penguins,
+     aes(x = flipper_length_mm)) + 
+     geom_histogram() + 
+     labs_histogram
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_histogram', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Frequency Polygon
+
+<br><br>
+
+.large[
+
+*Frequency polygons (`geom_freqpoly()`) are similar to histograms, but use lines instead of bars to represent the variable distribution.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Frequency Polygon
+
+*Map `flipper_length_mm` to the `x` axis, add the `geom_freqpoly()` layer and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_freqpoly, fig.show='hide'}
+labs_freqpoly <- labs(
+  x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+ggplot(data = penguins,
+      aes(x = flipper_length_mm)) + 
+    geom_freqpoly() +
+    labs_freqpoly
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_freqpoly', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Frequency Polygons
+
+<br><br>
+
+.large[
+
+*Frequency polygons are helpful when we want to look at a continuous variable across the levels of a categorical variable*
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Frequency Polygons
+
+*Add the `color` and `group` aesthetics to see multiple polygons.*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_freqpoly_group, fig.show='hide'}
+labs_freqpoly_2 <- labs(
+  x = "Flipper length (millimeters)",
+  color = "Penguins species",
+  title = "Adult foraging penguins")
+ggplot(data = penguins, 
+       aes(x = flipper_length_mm)) + 
+  geom_freqpoly(
+    aes(color = species, #<<
+        group = species)) + #<<
+  labs_freqpoly_2
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_freqpoly_group', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Dot-Plots
+
+<br>
+
+.large[*Dot-plots (`geom_dotplot()`) are similar to histograms and frequency polygons, except instead of using bars or lines, they use dots to represent the values of a given variable.*]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Dot-Plots
+
+*Map `flipper_length_mm` to the `x` axis, adjust the `dotsize`, add the `geom_dotplot()` layer and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_dotplot, fig.show='hide'}
+labs_dotplot <- labs(
+  x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+ggplot(data = penguins,
+    aes(x = flipper_length_mm)) + 
+    geom_dotplot(dotsize = 0.5) + 
+    labs_dotplot
+```
+
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_dotplot', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Dot-Plots
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r penguins_histodot}
+penguins_histodot <- filter(penguins, !is.na(sex))
+```
+
+]
+
+.panel[.panel-name[Data]
+
+```{r , echo=FALSE}
+reactable(penguins_histodot, defaultPageSize = 5)
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Dot-Plots
+
+<br>
+
+.large[
+*We can also use dot-plots to look at the range of a continuous (numerical) variable across the levels of a categorical (character) variable (like `sex` below).*
+*The default setting for the size of the dots is '1/30 of the range of the data.' We can adjust the size with `binwidth` (and `method = "histodot"`)*
+] 
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Dot-Plots
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r histodot, fig.show='hide'}
+labs_histodot <- labs(
+  x = "Flipper length (millimeters)",
+  fill = "Sex",
+  title = "Adult foraging penguins")
+ggplot(data = penguins_histodot, 
+    aes(x = flipper_length_mm,
+        fill = factor(sex))) + #<<
+  geom_dotplot(
+        stackgroups = TRUE,
+        binwidth = 1, #<<
+        method = "histodot") + #<<
+  labs_histodot
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='histodot', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Bee-swarm Plots
+
+<br>
+
+.large[*We can also use dots to show the spread of values for a particular variable with [`bee-swarm`](https://github.com/eclarke/ggbeeswarm) plots. These display the distribution of numeric values across the levels of a categorical variable.*]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Bee-swarm Plots
+
+*Map `island` to the `x` axis and `color`, `body_mass_g` to the `y` axis, the `geom_beeswarm()` layer (with `alpha`), and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_beeswarm, fig.show='hide'}
+labs_beeswarm <- labs(
+  x = "Island in Palmer Archipelago, Antarctica",
+  y = "Body mass (grams)",
+  color = "Penguin sex (female, male)",
+  title = "Adult foraging penguins")
+ggplot(data = penguins, 
+       aes(x = island, 
+           y = body_mass_g, 
+           color = island)) + 
+  ggbeeswarm::geom_beeswarm(
+      alpha = 1/2) + 
+  labs_beeswarm
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_beeswarm', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Density Plots
+
+<br>
+
+.large[*Density plots are similar to frequency polygons and histograms, except the line has been 'smoothed.' Instead of dividing the `x` axis into discrete quantitative ‘bins’ to create groups for the variable values, density plots transform the distribution according to a 'bandwidth' parameter.*]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Density Plots
+
+*Map `flipper_length_mm` to the `x` axis, add the `geom_density()` layer and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_density, fig.show='hide'}
+labs_density <- labs(
+  x = "Flipper length (millimeters)", 
+  title = "Adult foraging penguins")
+ggplot(data = penguins, 
+      aes(x = flipper_length_mm)) + 
+      geom_density() + 
+      labs_density
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_density', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Density Plots
+
+<br><br>
+
+.large[*Similar to frequency polygons, `geom_density()` is useful when we want to look at the distribution of a continuous variable across the levels of a categorical variable*]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Density Plots
+
+*We can set the `fill` argument to a categorical variable, and use the `alpha` to handle the overlapping areas.*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r density_alpha, fig.show='hide'}
+labs_density_alpha <- labs(
+  x = "Flipper length (millimeters)",
+  fill = "Penguin sex (female, male)",
+  title = "Adult foraging penguins")
+# remove missing sex
+penguins_density <- filter(penguins, !is.na(sex))
+ggplot(data = penguins_density, 
+       aes(x = flipper_length_mm, 
+        fill = sex)) + #<<
+        geom_density(alpha = 1/3) + #<<
+  labs_density_alpha
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='density_alpha', echo=FALSE}
+```
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Ridgeline Plots
+
+<br>
+
+.large[
+
+*If we want to plot density curves but retain the interpretability of the axes, consider comparing multiple distributions using [`ridgeline plots`](https://wilkelab.org/ggridges/) (`geom_density_ridges()`)*
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Ridgeline Plots
+
+*Map `bill_length_mm` to the `x` axis, `island` to the `y` axis and `fill`, the `geom_density_ridges()` layer (with `alpha`) and the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+.code80[
+
+```{r geom_density_ridges, fig.show='hide'}
+labs_density_ridges <- labs(
+  x = "Bill length (millimeters)",
+  y = "Island in Palmer Archipelago, Antarctica",
+  title = "Adult foraging penguins")
+# remove missing island
+penguins_density_ridges <- filter(penguins, !is.na(island))
+ggplot(data = penguins_density_ridges,
+       aes(x = bill_length_mm, 
+           y = island, 
+        fill = island)) +
+    # adjust alpha
+  ggridges::geom_density_ridges(alpha = 2/3) + 
+  labs_density_ridges
+```
+
+]
+
+
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_density_ridges', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Box-plots
+
+<br><br>
+
+.large[
+
+*Box-plots (sometimes called box-and-whisker plots) are great because they display a collection of statistics in a single graph. We're going to build a box-plot of a single numeric variable and review it's contents.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: Box-plots
+
+*Map a blank character string (`" "`) to the `x` axis, `length` to the `y` axis, the `geom_boxplot()` layer, and the labels*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_boxplot, fig.show='hide'}
+labs_boxplot <- labs(
+  y = "length", 
+  title = "IMDB Movie information and user ratings")
+ggplot(data = movies_data, 
+    # place an empty string in the
+    # x axis
+           aes(x = " ", 
+    # place the length on the y
+               y = length)) +
+    geom_boxplot() + 
+    labs_boxplot
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_boxplot', echo=FALSE}
+```
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Box-plots
+
+.large[*The table below shows the 25th percentile, the median, the 75th percentile, the IQR, and a histogram of the `length` column from the `movies_data` dataset.*]
+
+
+
+```{r skim-length-output, echo=FALSE}
+lgnth_skim <- skimr::skim(movies_data$length)
+LengthBoxStats <- select(lgnth_skim,
+     `25th` = numeric.p25, Median = numeric.p50,
+     `75th` = numeric.p75, Histogram = numeric.hist) %>%
+     mutate(IQR = IQR(movies_data$length, na.rm = TRUE)) %>%
+     select(`25th`, Median, `75th`, IQR, Histogram)
+rmarkdown::paged_table(LengthBoxStats)
+```
+
+.large[*These three horizontal lines give us a picture of the 'spread' of the data. If there is equal distance on either side of the middle (`Median`) line, this tells us the distribution is symmetrical.*]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Box-plots
+
+.large[
+
+*The numbers from the table can help you interpret the structure of the box-plot.* 
+
+```{r boxplot-diagram, echo=FALSE, fig.align='center', out.width='75%', out.height='75%'}
+knitr::include_graphics(path = "images/boxplot-diagram.png")
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Box-plots
+
+<br>
+
+
+.leftcol[
+
+
+```{r boxplot-diagram-02, echo=FALSE, fig.align='center', out.width='100%', out.height='100%'}
+knitr::include_graphics(path = "images/boxplot-diagram.png")
+```
+
+
+]
+
+--
+
+.rightcol[
+
+
++ *As we can see, the box-plot combines multiple summary statistics.*
+
++ *The 25th percentile (first quartile), the median (50th percentile or second quartile), and the 75th percentile (third quartile) values are common to all box-plots.*
+
++ *In `ggplot2`, values that fall more than 1.5 times the IQR are displayed as individual points (aka .green[*outliers*]). The lines extending from the bottom and top of the main box represent the last non-outlier value in the distribution.*
+
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Box-plots
+
+*Because box-plot provides so many helpful statistical measures, they are also helpful for viewing how a continuous variable varies across a categorical variable*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_boxplots, fig.show='hide'}
+labs_boxplots <- labs(
+  x = "mpaa",
+  y = "length", 
+   title = "IMDB Movie information and user ratings")
+ggplot(data = movies_data, 
+    # place an empty string in the
+    # x axis
+           aes(x = mpaa, 
+    # place the length on the y
+               y = length)) +
+    geom_boxplot() + 
+    labs_boxplots
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_boxplots', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Distributions: More Box-plots
+
+*Compare the four graphs of `length` from `movie_data` below to the box-plot:*
+
+```{r ggp_box-ggp_freqp, fig.align='center', out.width='68%', out.height='68%', echo=FALSE, fig.width=8, fig.height=4, eval=FALSE}
+small_ggp2_theme <- theme(
+  text = element_text(size = 7), 
+  axis.text = element_text(size = 7), 
+  axis.title = element_text(size = 7), 
+  plot.title = element_text(size = 8),
+  legend.text = element_text(size = 7), 
+  legend.title = element_text(size = 7))
+ggp_point <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_point() + 
+    labs(y = "length", title = "geom_point()") + 
+    small_ggp2_theme
+ggp_box <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_boxplot() + 
+    labs(y = "length", title = "geom_boxplot()") + 
+    small_ggp2_theme
+ggp_freqp <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_freqpoly() + coord_flip() +
+    labs(x = "length", title = "geom_freqpoly()") + 
+    small_ggp2_theme
+ggp_hist <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_histogram() + coord_flip() +
+    labs(x = "length", title = "geom_histogram()") + 
+    small_ggp2_theme
+ggp_density <- ggplot(data = movies_data, 
+           aes(x = length)) +
+    geom_density() + coord_flip() +
+    labs(x = "length", y = " ", title = "geom_density()") + 
+    small_ggp2_theme
+ggp_box <- ggplot(data = movies_data, 
+           aes(x = ' ', y = length)) +
+    geom_boxplot() + 
+    labs(y = "length", title = "geom_boxplot()") + 
+    small_ggp2_theme
+patchwork::wrap_plots(ggp_point, ggp_freqp, 
+                      ggp_hist, ggp_density, ggp_box, 
+                      ncol = 5) 
+```
+
+```{r boxplot-comparisons, echo=FALSE, fig.align='center', out.width='85%', out.height='85%'}
+knitr::include_graphics(path = "images/boxplot-comparisons.png")
+```
+
+
+---
+class: inverse, center, bottom
+background-image: url(images/pdg-hex.png)
+background-position: 50% 50%
+background-size: 20%
+
+
+# Thanks!
+
+

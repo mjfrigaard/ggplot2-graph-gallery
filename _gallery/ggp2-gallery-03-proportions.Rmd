@@ -123,7 +123,7 @@ background-image: url(images/pdg-hex.png)
 background-position: 95% 8%
 background-size: 10%
 
-# Resources :
+# Resources:
 
 .leftcol[
 
@@ -245,9 +245,9 @@ background-size: 10%
 
 > - .red[Distributions]
 
-> .blue[Hierarchies and proportions]
+> .blue[**Hierarchies and proportions**]
 
-> - .red[.fancy[Part-to-whole relationships]]
+> - .red[.fancy[**Part-to-whole relationships**]]
 
 ]
 

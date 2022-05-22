@@ -1,0 +1,756 @@
+---
+title: "ggplot2 Graph Gallery"
+subtitle: "Hierarchies/proportions: part-to-whole relationships"
+author: 
+  - "Martin Frigaard"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/extra_styles.css
+      - css/pdg_duo_accent_inverse.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE,
+  fig.width = 13.504, 
+  fig.align = 'center',
+  fig.height = 4.8,
+  fig.retina = 3.5 # Better figure resolution
+)
+library(reactable)
+library(tidyverse)
+options(reactable.theme = reactableTheme(
+  color = "hsl(233, 9%, 87%)",
+  backgroundColor = "hsl(233, 9%, 19%)",
+  borderColor = "hsl(233, 9%, 22%)",
+  stripedColor = "hsl(233, 12%, 22%)",
+  highlightColor = "hsl(233, 12%, 24%)",
+  inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)")
+))
+library(xaringanthemer)
+xaringanthemer::style_duo_accent_inverse(
+    # inverse_background_color = ""
+    primary_color = "#1da2d8", # electric blue
+    secondary_color = "#0a87b7", #
+    inverse_link_color = "#e9dc3f",
+    code_inline_background_color = "#282828",
+    text_bold_color = "#0C7185", 
+    code_inline_color = "#ff723a", 
+    code_highlight_color = "#a0d2f8",
+    link_color = "#df4c73",
+    white_color = "#f5f5f5", 
+    text_color = "#def3f6", 
+    outfile = "css/pdg_duo_accent_inverse.css"
+    ) 
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+# fs::dir_tree("../code")
+source("src/copy-slide-images.R")
+source("src/create-movie-data.R")
+source("src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 6%
+
+## `palmerpenguins` 
+
+[package website](https://allisonhorst.github.io/palmerpenguins/)
+
+```{r create-penguins, eval=FALSE}
+penguins <- palmerpenguins::penguins
+penguins
+```
+
+
+.small[
+
+```{r paged_table-penguins, echo=FALSE}
+# rmarkdown::paged_table(penguins)
+reactable::reactable(penguins, defaultPageSize = 5)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `fivethirtyeight` 
+
+[package website](https://fivethirtyeight-r.netlify.app/)
+
+*All datasets are listed below with descriptions*
+
+.small[
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+# rmarkdown::paged_table()
+x <- datasets("fivethirtyeight")
+reactable::reactable(x, defaultPageSize = 5, searchable = TRUE)
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `ggplot2movies` 
+
+[package website](https://github.com/hadley/ggplot2movies)
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+.small[
+
+```{r paged_table-movies_data, echo=FALSE}
+# rmarkdown::paged_table(movies_data)
+reactable::reactable(movies_data, 
+                     defaultPageSize = 5)
+```
+
+]
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 20%
+
+# Hierarchies/proportions
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# Part-to-whole relationships
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Pie charts
+
+<br>
+
+.large[*Pie-charts ([`ggpubr::ggpie`](https://rpkgs.datanovia.com/ggpubr/reference/ggpie.html)) are ideal for comparing the proportions of categorical variable values*]
+
+<br><br>
+
+--
+
+.leftcol[
+
+> "*In general, pie charts work well when the goal is to emphasize .red[simple fractions, such as one-half, one-third, or one-quarter.]*"
+
+]
+
+--
+
+.rightcol[
+
+> "*They also work well when we have .red[very small datasets.]*" - Claus O. Wilke, Fundamentals of Data Visualization (2019)
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Pie charts
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r movies_mpaa_avg_rating}
+movies_mpaa_avg_rating <- tibble::tribble(
+    ~mpaa,             ~avg,
+     "PG", 5.72621359223301,
+  "PG-13", 5.95468164794007,
+      "R", 6.04015748031496
+  )
+movies_mpaa_avg_rating <- mutate(movies_mpaa_avg_rating, 
+       mpaa = factor(mpaa, levels = c("PG", "PG-13", "R")))
+```
+
+
+]
+
+.panel[.panel-name[Data]
+
+```{r , echo=FALSE}
+reactable(movies_mpaa_avg_rating, defaultPageSize = 5)
+```
+
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Pie charts
+
+*Map `avg` to the `x` axis, `mpaa` to `label` and `fill`, "white" to `color`, remove the legend and add the labels.*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r ggpie, fig.show='hide'}
+labs_pie <- labs(
+  x = "Average MPAA rating", 
+  title = "Average MPAA ratings for IMDB movies")
+ggpubr::ggpie(data = movies_mpaa_avg_rating, 
+                  x = "avg", 
+              label = "mpaa", 
+              fill = "mpaa", 
+              color = "white") + 
+    # remove legend
+    theme(legend.position = "none") + 
+    labs_pie
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='ggpie', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Stacked-density
+
+<br><br>
+
+.large[*We previously used density graphs to visualize the distribution of a single variable, but stacked density graphs are great for visualizing how proportions vary across numeric (continuous) variables.*]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Stacked-density
+
+.large[*We'll remove the missing values from `species`.*]
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r penguins_stacked_density}
+penguins <- palmerpenguins::penguins
+penguins_stacked_density <- filter(penguins, !is.na(species))
+```
+
+]
+
+.panel[.panel-name[Data]
+
+.small[
+
+```{r , echo=FALSE}
+reactable(penguins_stacked_density, 
+          resizable = TRUE,
+          defaultPageSize = 5)
+```
+]
+]
+]
+
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Stacked-density
+
+*To create a stacked-density graph, map the continuous variable to the `x` variable, and the categorical variable to both the `group` and `fill` aesthetic. We also map `y` to `..count..` to see each relative distributions across a scale of `0.00` to `1.00`, and add the `adjust` and `position` arguments to the `geom_density()`*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r stacked_density, fig.show='hide'}
+labs_stacked_density <- labs(
+  x = "Penguin body mass (grams)", 
+  title = "Adult foraging penguins", 
+  fill = "Penguin species")
+ggplot(data = penguins_stacked_density, 
+       aes(x = body_mass_g, 
+           y = ..count.., #<<
+           group = species, 
+           fill = species)) +
+    geom_density(adjust = 1.5, #<<
+                 position = "fill") + #<<
+    labs_stacked_density
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='stacked_density', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Waffle Chart
+
+<br><br>
+
+.large[
+
+*Waffle charts use color to display the levels that make up the values in a categorical variable. The counts for each level are divided into separate colors into a square or grid display.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Waffle Chart
+
+
+*Waffle charts require a special data transformation with `ggwaffle::waffle_iron()`. Set the `group` argument in `aes_d()` as the categorical variable you want to see the relative counts for.*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r waffle_penguins}
+library(ggwaffle)
+penguins <- palmerpenguins::penguins
+penguins <- mutate(penguins, species = as.character(species))
+waffle_penguins <- ggwaffle::waffle_iron(penguins, #<<
+                      aes_d(group = species)) #<<
+```
+
+]
+
+.panel[.panel-name[Data]
+
+```{r ,echo=FALSE}
+reactable(waffle_penguins,
+          defaultPageSize = 5, 
+          resizable = TRUE)
+```
+
+
+]
+]
+
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## Part-to-whole relationships: Waffle Chart
+
+*Map the `x` and `y` to the `x` and `y` axes, `group` to `fill`, and the labels*
+
+*We'll also add the `ggwaffle::theme_waffle()` to our plot to remove some of the axis text and ticks.*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_waffle, fig.show='hide'}
+labs_waffle <- labs(x = "", y = "",
+  title = "Waffle chart of palmer penguin species")
+ggplot(waffle_penguins, 
+       aes(x = x, 
+           y = y, 
+           fill = group)) + 
+  ggwaffle::geom_waffle() + 
+  labs_waffle + 
+  # 'flavour your waffles with a standard theme'
+  ggwaffle::theme_waffle() #<<
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_waffle', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Mosaic plot
+
+<br><br>
+
+.large[
+
+*A mosaic plot is similar to a stacked bar-graph, but instead of only relying on height and color to display the relative amount for each value, mosaic plots also use width.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Mosaic plot
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r mosaic_data_code}
+flying <- fivethirtyeight::flying
+# remove missing from baby 
+# and unruly_child
+flying_mosaic <- filter(flying, 
+                        !is.na(baby) &
+                 !is.na(unruly_child))
+```
+
+]
+
+.panel[.panel-name[Data]
+
+.small[
+
+```{r , echo=FALSE}
+reactable(flying_mosaic, 
+          defaultPageSize = 3, 
+          resizable = TRUE)
+```
+
+]
+]
+]
+
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Mosaic plot
+
+*Map the `product()` of `unruly_child` and `baby` to the `x` axis, `unruly_child` to `fill`, and add the labels.*
+
+*Move the legend to the top of the graph with `theme(legend.position = "top")`*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+.code80[
+```{r geom_mosaic, fig.show='hide'}
+library(ggmosaic)
+mosaic_labs <- labs(
+  title = "In general...", 
+  x = "...is it rude to bring a baby on a plane?",
+  y = "..is it rude to knowingly bring unruly children on a plane?",
+  fill = "Responses") 
+ggplot(data = flying_mosaic) +
+  ggmosaic::geom_mosaic(
+    aes(x = product(unruly_child, baby), 
+                  fill = unruly_child)
+    ) + 
+  mosaic_labs +  
+  theme(legend.position = "top") #<<
+```
+]
+
+ 
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_mosaic', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Mosaic plot
+
+<br><br>
+
+.leftcol75[
+.border[
+
+```{r re-plot-mosaic_plot, ref.label='geom_mosaic', echo=FALSE, fig.align='right', out.width='95%', out.height='95%'}
+```
+
+]]
+
+--
+
+.rightcol25[
+
+*As we can see, the widths of each rectangle are proportional to the responses to the `x` axis survey item*
+
+<br>
+
+*and the heights are proportional to the responses to the `y` axis survey item.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Treemaps
+
+<br><br>
+
+.large[*Treemaps display how numerical hierarchical values make up a whole in a rectangular layout, often referred to as 'squarified', which represents of the 100% total values. We can guild treemaps in `ggplot2` with the [`treemapify` package](http://wilkox.org/treemapify/)*]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Treemaps
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r treemap_penguins_counts, fig.show='hide'}
+treemap_penguins <- filter(penguins, !is.na(sex))
+treemap_penguins_grouped <- group_by(treemap_penguins, 
+                                  species, island, sex)
+treemap_penguins_counts <- ungroup(
+                             count(treemap_penguins_grouped, 
+                              species, island))
+```
+
+]
+
+.panel[.panel-name[Data]
+
+```{r , echo=FALSE}
+reactable(treemap_penguins_counts, 
+          defaultPageSize = 5, resizable = TRUE)
+```
+]
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Treemaps
+
+*Map the `n` to `area`, `sex` to `fill`, `species` to `label`, `island` to `subgroup` and add the labels*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_treemap, fig.show='hide'}
+library(treemapify)
+labs_treemap <- labs(
+  title = "Species, island, and sex of adult penguins")
+ggplot(treemap_penguins_counts, 
+       aes(area = n, 
+           fill = sex, 
+           label = species,
+           subgroup = island)) +
+       treemapify::geom_treemap() + #<<
+       labs_treemap
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_treemap', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Treemaps
+
+*Add the borders with `geom_treemap_subgroup_border()`*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_treemap_subgroup_border, fig.show='hide'}
+ggplot(treemap_penguins_counts, 
+       aes(area = n, 
+           fill = sex, 
+           label = species,
+           subgroup = island)) +
+       treemapify::geom_treemap() + 
+       treemapify::geom_treemap_subgroup_border() + #<<
+       labs_treemap
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_treemap_subgroup_border', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Part-to-whole relationships: Treemaps
+
+*Include labels for subgroup with `geom_treemap_subgroup_text()` (see full list of arguments [here](http://wilkox.org/treemapify/reference/geom_treemap_subgroup_text.html))*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+.code80[
+```{r geom_treemap_subgroup_text, fig.show='hide'}
+ggplot(treemap_penguins_counts, 
+       aes(area = n, 
+         fill = sex, 
+         label = species,
+         subgroup = island)) +
+       treemapify::geom_treemap() + 
+       treemapify::geom_treemap_subgroup_border() +
+       treemapify::geom_treemap_subgroup_text( #<<
+         place = "center", 
+         grow = TRUE, 
+         alpha = 0.9, 
+         color = "white",
+         fontface = "bold",
+         family = "sans",
+         min.size = 0) + 
+       labs_treemap
+```
+]
+
+
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_treemap_subgroup_text', echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+---
+class: inverse, center, bottom
+background-image: url(images/pdg-hex.png)
+background-position: 50% 50%
+background-size: 20%
+
+
+# Thanks!

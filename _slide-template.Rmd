@@ -1,0 +1,92 @@
+---
+title: "Slide deck title: [topic]"
+subtitle: "PDG: [subtitle]"  
+author: 
+  - "Martin Frigaard"
+  - "Peter Spangler"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: 
+      - extra_styles.css
+      - pdg_duo_accent_inverse.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE,
+  fig.width = 13.504, 
+  fig.align = 'center',
+  fig.height = 4.8,
+  fig.retina = 3.5 # Better figure resolution
+)
+library(reactable)
+library(tidyverse)
+options(reactable.theme = reactableTheme(
+  color = "hsl(233, 9%, 87%)",
+  backgroundColor = "hsl(233, 9%, 19%)",
+  borderColor = "hsl(233, 9%, 22%)",
+  stripedColor = "hsl(233, 12%, 22%)",
+  highlightColor = "hsl(233, 12%, 24%)",
+  inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)")
+))
+```
+
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent_inverse(
+    # inverse_background_color = ""
+    primary_color = "#1da2d8", # electric blue
+    secondary_color = "#0a87b7", #
+    inverse_link_color = "#e9dc3f",
+    code_inline_background_color = "#282828",
+    text_bold_color = "#0C7185", 
+    code_inline_color = "#ff723a", 
+    link_color = "#df4c73",
+    white_color = "#f5f5f5", 
+    text_color = "#def3f6", 
+    outfile = "css/pdg_duo_accent_inverse.css"
+    ) 
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+```
+
+# Panels!
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r example_panel, fig.show='hide'}
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+    geom_point() +
+    theme_bw() +
+    labs(color = 'Cylinders')
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='example_panel',  echo=FALSE, out.height='90%', out.width='90%'}
+```
+]
+]
+
+
+---
+class: center, middle
+
+# Thanks!

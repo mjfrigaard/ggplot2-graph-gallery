@@ -1,0 +1,543 @@
+---
+title: "`ggplot2` Graph Gallery"
+subtitle: "Categories and distributions: *amounts*"
+author: 
+  - "Martin Frigaard"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/extra_styles.css
+      - css/pdg_duo_accent_inverse.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE,
+  fig.width = 13.504, 
+  fig.align = 'center',
+  fig.height = 4.8,
+  fig.retina = 3.5 # Better figure resolution
+)
+library(reactable)
+library(tidyverse)
+options(reactable.theme = reactableTheme(
+  color = "hsl(233, 9%, 87%)",
+  backgroundColor = "hsl(233, 9%, 19%)",
+  borderColor = "hsl(233, 9%, 22%)",
+  stripedColor = "hsl(233, 12%, 22%)",
+  highlightColor = "hsl(233, 12%, 24%)",
+  inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)")
+))
+library(xaringanthemer)
+xaringanthemer::style_duo_accent_inverse(
+    # inverse_background_color = ""
+    primary_color = "#1da2d8", # electric blue
+    secondary_color = "#0a87b7", #
+    inverse_link_color = "#e9dc3f",
+    code_inline_background_color = "#282828",
+    text_bold_color = "#0C7185", 
+    code_inline_color = "#ff723a", 
+    link_color = "#df4c73",
+    white_color = "#f5f5f5", 
+    text_color = "#def3f6", 
+    outfile = "css/pdg_duo_accent_inverse.css"
+    ) 
+xaringanExtra::use_panelset()
+xaringanExtra::use_clipboard()
+# fs::dir_tree("../code")
+source("src/copy-slide-images.R")
+source("src/create-movie-data.R")
+source("src/vcsExtra-datasets-fun.R")
+movies_data <- create_movie_data()
+movies_data <- filter(movies_data, !is.na(budget)) %>%
+  mutate(mpaa = factor(mpaa,
+    levels = c("PG", "PG-13", "R")
+  ))
+ggplot2::theme_set(ggplot2::theme_minimal())
+```
+
+
+
+### Load data packages 
+
+<br>
+
+```{r package-datasets, message=FALSE, warning=FALSE}
+library(palmerpenguins)
+library(fivethirtyeight)
+library(ggplot2movies)
+```
+
+---
+class: left, top
+background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/logo.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `palmerpenguins` 
+
+[package website](https://allisonhorst.github.io/palmerpenguins/)
+
+```{r create-penguins, eval=FALSE}
+penguins <- palmerpenguins::penguins
+penguins
+```
+
+
+.small[
+
+```{r paged_table-penguins, echo=FALSE}
+# rmarkdown::paged_table(penguins)
+reactable::reactable(penguins, defaultPageSize = 5)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `fivethirtyeight` 
+
+[package website](https://fivethirtyeight-r.netlify.app/)
+
+*All datasets are listed below with descriptions*
+
+.small[
+
+```{r paged_table-fivethirtyeight, echo=FALSE}
+# rmarkdown::paged_table()
+x <- datasets("fivethirtyeight")
+reactable::reactable(x, defaultPageSize = 5, searchable = TRUE)
+```
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+## `ggplot2movies` 
+
+[package website](https://github.com/hadley/ggplot2movies)
+
+*We're using `movies_data` (derived version of the `ggplot2movies::movies`)*
+
+```{r movies_data, eval=FALSE}
+movies_data
+```
+
+.small[
+
+```{r paged_table-movies_data, echo=FALSE}
+# rmarkdown::paged_table(movies_data)
+reactable::reactable(movies_data, 
+                     defaultPageSize = 5)
+```
+
+]
+
+---
+class: inverse, center, top
+background-image: url(images/ggplot2.png)
+background-position: 50% 50%
+background-size: 25%
+
+# Comparing Categories and Distributions
+
+<br><br><br><br><br><br><br><br><br><br><br>
+
+# Amounts
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Bars
+
+<br>
+
+.large[
+
+*The bar chart (or graph) is typically used to display counts. Bar charts can be arranged vertically or horizontally, stacked, diverging, or dodged. In `ggplot2`, bar charts can be built using `geom_bar()` or `geom_col()`*
+
+]
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Bars
+
+<br>
+
+```{r geom_bar-movies_data-code, eval=FALSE}
+movies_data
+```
+
+
+.small[
+
+```{r geom_bar-movies_data-paged, echo=FALSE}
+# rmarkdown::paged_table(movies_data)
+reactable::reactable(movies_data, defaultPageSize = 5)
+```
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Bars
+
+*Map `mpaa` to the `x` axis and to the `fill` aesthetic inside the `aes()` of `geom_bar()`, and add the labels*
+
+.panelset[
+.panel[.panel-name[R Code]
+
+```{r geom_bar, fig.show='hide'}
+labs_geom_bar <- labs(
+  x = "MPAA rating", 
+  title = "IMDB movie information/user ratings")
+
+ggplot(data = movies_data, 
+       aes(x = mpaa)) + 
+    geom_bar(aes(fill = mpaa)) + 
+  labs_geom_bar
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r show-geom_bar, ref.label='geom_bar', echo=FALSE, out.height='80%', out.width='80%'}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Grouped Bars
+
+<br>
+
+.large[
+
+*To create grouped bar charts (compare the values of a numerical variable across the levels of a categorical variable) we can use the [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) function.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Grouped Bars
+
+*Map `mpaa` to the `x` axis, `rating` to the `y` axis, and `mpaa` to `fill` inside the `aes()` of `geom_col()`, and add the labels*
+
+.panelset[
+.panel[.panel-name[R Code]
+
+```{r labs_geom_col}
+labs_geom_col <- labs(
+  x = "MPAA rating", 
+  y = "Average IMDB user rating",
+  title = "IMDB movie information/user ratings")
+```
+
+```{r geom_col, fig.show='hide'}
+ggplot(data = movies_data,
+           aes(x = mpaa, 
+               y = rating)) + 
+    geom_col(aes(fill = mpaa)) + 
+    labs_geom_col
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r plot-geom_col, ref.label='geom_col', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Stacked Bars
+
+<br>
+
+.large[
+
+*We can also use bars to look at numeric and categorical variables using `geom_bar()` by setting `fill` argument.*
+
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Stacked Bars
+
+*Map `flipper_length_mm` to the `x` axis, `sex` to  `fill`, the `geom_bar()` layer, and add the labels*
+
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r labs_geom_bar_stacked}
+labs_geom_bar_stacked <- labs(
+  x = "Flipper length (millimeters)",
+  title = "Adult foraging penguins")
+```
+
+```{r stacked-bars, fig.show='hide'}
+# remove missing sex
+penguins_stacked <- filter(penguins,
+                        !is.na(sex))
+ggplot(data = penguins_stacked,
+      aes(x = flipper_length_mm,
+       fill = sex)) +
+    geom_bar() + 
+    labs_geom_bar_stacked
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r plot-stacked-bars, ref.label='stacked-bars', echo=FALSE, fig.align='center', out.width='90%', out.height='90%'}
+```
+
+
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: More Stacked Bars
+
+.large[
+
+*Map `island` to the `x` axis, `flipper_length_mm` to the `y` axis, `sex` to `fill`, the `geom_bar()` layer (with `position` and `stat`), and add the labels*
+
+]
+
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: More Stacked Bars
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r geom_bar_stacked_2, fig.show='hide'}
+geom_bar_stacked_2 <- labs(
+  x = "Island in Palmer Archipelago",
+  y = "Flipper length (millimeters)",
+  title = "Adult foraging penguins")
+ggplot(data = penguins,
+      aes(x = island,
+          y = flipper_length_mm,
+          fill = sex)) + 
+# use this to determine how many
+# sex values are NA (and in what
+# categories)
+    geom_bar(position = "stack", 
+             stat = "identity") + 
+    geom_bar_stacked_2
+```
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_bar_stacked_2', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Diverging Bars
+
+*If you have a numeric variable with positive and negative values, consider using diverging bars with `geom_bar()`*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+```{r sample_names}
+unisex_names <- fivethirtyeight::unisex_names
+unisex_names_diff <- mutate(unisex_names, 
+     male_female_diff = male_share - female_share,
+     diff_cat = if_else(
+                  male_female_diff > 0, 
+                  true = "More common male name", 
+                  false = "More common female name"))
+sample_names <- slice_sample(unisex_names_diff, n = 10)
+```
+
+]
+
+.panel[.panel-name[Data]
+
+.small[
+```{r reactable-sample_names, echo=FALSE}
+reactable(data = sample_names, defaultPageSize = 5)
+```
+]
+
+]
+
+]
+
+
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Diverging Bars
+
+*Here we use the `reorder()` function to arrange the values of `male_female_diff` by `name`, and map the `diff_cat` to `label`.*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+.code70[
+
+```{r geom_bar_diverg, fig.show='hide'}
+labs_geom_bar_diverg <- labs(
+  x = "Name",
+  y = "Male share - female share", 
+  title = "Most Common Unisex Names In America",
+  fill = "Difference category")
+ggplot(data = sample_names,
+      aes(x = reorder(x = name, 
+               male_female_diff),
+      # reorder this by x
+      y =  male_female_diff,
+      label = diff_cat)) +
+  geom_bar(
+      aes(fill = diff_cat),
+          stat = "identity",
+         width = .5) + 
+  labs_geom_bar_diverg
+```
+
+]
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_bar_diverg', echo=FALSE}
+```
+]
+]
+
+---
+class: left, top
+background-image: url(images/pdg-hex.png)
+background-position: 95% 8%
+background-size: 7%
+
+# Amounts: Diverging Bars (vertical)
+
+*Diverging bar-charts can be arranged vertically, too. For vertically arranged bars, we switch the `x` and `y` axis variables (and the `reorder()` function).*
+
+.panelset[
+
+.panel[.panel-name[R Code]
+
+.code70[
+
+```{r geom_bar_diverg_vert, fig.show='hide'}
+labs_geom_bar_diverg_vert <- labs(
+  x = "Name", 
+  y = "Male share - female share", 
+  title = "Most Common Unisex Names In America",
+  fill = "Difference category")
+ggplot(data = sample_names,
+      aes(x = male_female_diff,
+      # reorder this by x
+      y =  reorder(x = name, 
+               male_female_diff),
+      label = diff_cat)) +
+  geom_bar(
+      aes(fill = diff_cat),
+          stat = "identity",
+         width = .5) + 
+  labs_geom_bar_diverg_vert
+```
+
+]
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='geom_bar_diverg_vert', echo=FALSE}
+```
+]
+]
+
+
